@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render the app should render with token expired 1`] = `<DocumentFragment />`;
+
+exports[`render the app should render without crashing 1`] = `<DocumentFragment />`;

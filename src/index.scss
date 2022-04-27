@@ -1,0 +1,14 @@
+@import './theme/colors.module.scss';
+@import './theme/fonts.scss';
+
+body {
+    margin: 0;
+    font-family: 'Gilroy';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: $B0;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

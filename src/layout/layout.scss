@@ -1,0 +1,26 @@
+@import '../theme/colors.module.scss';
+@import '../theme/viewport.scss';
+
+.main {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .content {
+        width: 40%;
+        display: flex;
+    }
+}
+
+@media screen and (max-width: $mobile) {
+    .main {
+        margin-top: 4rem;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .content {
+            width: 90%;
+            display: flex;
+        }
+    }
+}

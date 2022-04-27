@@ -1,0 +1,16 @@
+hooks:
+    afterAllFileWrite:
+        - prettier --write
+schema: ./schema.json
+documents: '../services/queries/*'
+config:
+    enumsAsTypes: true
+    typesPrefix: I
+    namingConvention:
+        enumValues: change-case#pascalCase
+    operationResultSuffix: 'Result'
+generates:
+    ./index.ts:
+        plugins:
+            - typescript
+            - typescript-operations

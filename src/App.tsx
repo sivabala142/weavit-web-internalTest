@@ -20,6 +20,8 @@ const httpLink = createHttpLink({
     uri: API_BASE_URL,
     fetch,
 });
+console.log("API_BASE_URL",API_BASE_URL);
+
 
 const authLink = setContext((_, { headers }) => {
     const token = cookies.get('access_token_weavit');

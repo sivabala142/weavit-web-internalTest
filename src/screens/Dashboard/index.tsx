@@ -1,8 +1,19 @@
 import React from 'react';
 import { useGlobalContext } from '../../hooks/GlobalContext';
 // import { WIButton } from '@weavit/weavit-material-ui';
+import { useQuery, gql } from "@apollo/client";
+
 export const Dashboard = () => {
     const { user } = useGlobalContext();
+    const GetAllMemos = gql`
+    {
+        getAllMemo(currentPage: 1, pageSize: 1){
+    count
+  }
+      }
+  `;
+    const { data, loading, error } = useQuery(GetAllMemos);
+    console.log(data, error);
 
     return (
         <React.Fragment>

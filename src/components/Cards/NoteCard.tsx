@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
@@ -9,11 +9,39 @@ import ellipsis from "../images/Ellipsis.png";
 import { getData } from "../data/dummyData";
 import { CustomButton, NoteIcon } from "../theme/MuiComponents";
 
+import { useGlobalContext } from '../../hooks/GlobalContext';
+// import { WIButton } from '@weavit/weavit-material-ui';
+import { useQuery, gql, useMutation, ApolloClient, createHttpLink, DefaultOptions, from, InMemoryCache, LazyQueryHookOptions, OperationVariables, QueryTuple, TypedDocumentNode, useLazyQuery } from "@apollo/client";
+import { DocumentNode, GraphQLError } from 'graphql';
+import { GET_ALL_MEMO } from '../../services/queries';
+import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
+import moment from 'moment'
+
 function NoteCard() {
-  const data = getData();
+
+  const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
+    IGetAllMemoQueryResult,
+    IGetAllMemoQueryVariables
+  >(GET_ALL_MEMO);
+
+  useEffect(() => {
+    fetchTimeline();
+  }, []);
+
+  const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
+    const variables: IGetAllMemoQueryVariables = {
+      pageSize: PAGE_SIZE,
+      skipToken: 0,
+      ...(addition ?? {}),
+    };
+    queryMemos({ variables });
+  };
+  console.log("data", data?.getAllMemo?.memos);
+  
+
   return (
     <div>
-      {data.map((item, index) => (
+      {data && data.getAllMemo && data.getAllMemo!.memos.map((item, index) => (
         <Fragment key={index}>
           <Typography
             variant="body2"
@@ -27,58 +55,59 @@ function NoteCard() {
               marginBottom: 2,
             }}
           >
-            {item.dateTime}
+            {moment(item.creationDate).format('dddd,MMM DD, YYYY')}
+
           </Typography>
-          {item.desc.map((sub, i) => (
+
+          <Grid
+            // key={}
+            style={{
+              marginLeft: 12,
+              marginRight: 12,
+              borderRadius: 16,
+              marginTop: 12,
+              backgroundColor: "#fff",
+              padding: 4,
+            }}
+          >
             <Grid
-              key={i}
-              style={{
-                marginLeft: 12,
-                marginRight: 12,
-                borderRadius: 16,
-                marginTop: 12,
-                backgroundColor: "#fff",
-                padding: 4,
-              }}
+              style={{ display: "flex", marginBottom: 10, paddingLeft: 8 }}
             >
-              <Grid
-                style={{ display: "flex", marginBottom: 10, paddingLeft: 8 }}
+              <Typography
+                variant="body2"
+                style={{
+                  textAlign: "left",
+                  fontWeight: 500,
+                  fontFamily: "DMSans-Regular",
+                  width: 260,
+                  marginTop: 4,
+                }}
               >
-                <Typography
-                  variant="body2"
-                  style={{
-                    textAlign: "left",
-                    fontWeight: 500,
-                    fontFamily: "DMSans-Regular",
-                    width: 260,
-                    marginTop: 4,
-                  }}
-                >
-                  {Object.values(sub).map((a) => a)}
-                </Typography>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={ellipsis}
-                  sx={{
-                    width: 25,
-                    height: 25,
-                    marginLeft: "auto",
-                    marginRight: 1,
-                    top: 4,
-                  }}
-                />
-              </Grid>
-              <Divider />
-              <CustomButton
-                // onClick={() => navigate('about', {state: item.id})}
-                color="inherit"
-                variant="outlined"
-                startIcon={<NoteIcon />}
-              >
-                Note Block
-              </CustomButton>
+                {item.content}
+              </Typography>
+              <Avatar
+                alt="Remy Sharp"
+                src={ellipsis}
+                sx={{
+                  width: 25,
+                  height: 25,
+                  marginLeft: "auto",
+                  marginRight: 1,
+                  top: 4,
+                }}
+              />
             </Grid>
-          ))}
+            <Divider />
+            <CustomButton
+              // onClick={() => navigate('about', {state: item.id})}
+              color="inherit"
+              variant="outlined"
+              startIcon={<NoteIcon />}
+            >
+              Note Block
+            </CustomButton>
+          </Grid>
+
         </Fragment>
       ))}
     </div>
@@ -86,3 +115,13 @@ function NoteCard() {
 }
 
 export default NoteCard;
+
+export function useLazyQueryNoCache<TData = any, TVariables = OperationVariables>(query: DocumentNode | TypedDocumentNode<TData, TVariables>, options?: LazyQueryHookOptions<TData, TVariables> | undefined): QueryTuple<TData, TVariables> {
+  return useLazyQuery<TData, TVariables>(query, {
+    fetchPolicy: 'no-cache',
+    nextFetchPolicy: 'no-cache',
+    ...(options ?? {}),
+  });
+}
+
+export const PAGE_SIZE = 50;

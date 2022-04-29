@@ -15,6 +15,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import './components/styles/App.css';
 import { theme } from './components/theme/default';
 import DrawerLayout from './components/Layouts/DrawerLayout';
+import Home from './components/pages/Home';
 
 const httpLink = createHttpLink({
     uri: API_BASE_URL,
@@ -50,9 +51,8 @@ function App() {
                     <GlobalProvider>
                         <Routes>
                             <Route path="/" element={<ProtectedRoute />}>
-                                <Route element={<DrawerLayout />}>
-                                    <Route path="/" element={<Dashboard />} />
-                                </Route>
+                                    {/* <Route path="/" element={<Dashboard />} /> */}
+                                    <Route path="/" element={<Home />} />
                             </Route>
                         </Routes>
                     </GlobalProvider>

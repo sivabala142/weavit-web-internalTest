@@ -119,6 +119,7 @@ export default function MainPanel() {
               {...a11yProps(0)}
             />
             <Tab
+               disabled={true}
               style={{ marginLeft: -8 }}
               onClick={() => navigate("/inbox")}
               label={
@@ -142,6 +143,7 @@ export default function MainPanel() {
               {...a11yProps(1)}
             />
             <Tab
+               disabled={true}
               onClick={() => {
                 setValue(2);
                 navigate("/search");
@@ -168,6 +170,7 @@ export default function MainPanel() {
               {...a11yProps(2)}
             />
             <Tab
+            disabled={true}
               onClick={() => {
                 setValue(3);
                 navigate("/profile");

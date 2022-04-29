@@ -1,102 +1,152 @@
 @font-face {
-    font-family: "DMSans-Bold";
-    src: url("../fonts/DMSans-Bold.ttf");
-  }
-  @font-face {
-    font-family: "DMSans-BoldItalic";
-    src: url("../fonts/DMSans-BoldItalic.ttf");
-  }
-  @font-face {
-    font-family: "DMSans-Italic";
-    src: url("./fonts/DMSans-Italic.ttf");
-  }
-  @font-face {
-    font-family: "DMSans-Medium";
-    src: url("../fonts/DMSans-Medium.ttf");
-  }
-  @font-face {
-    font-family: "DMSans-MediumItalic";
-    src: url("../fonts/DMSans-MediumItalic.ttf");
-  }
-  @font-face {
-    font-family: "DMSans-Regular";
-    src: url("../fonts/DMSans-Regular.ttf");
-  }
-  
-  html {
-    background-color: #fff;
-    height: 100%;
-  }
-  .App {
-    background-color: #fff;
-    background-size: cover;
-    height: 100%;
-  }
-  
-  .MuiTabs-indicator {
-    background-color: transparent !important;
-  }
-  
-  .css-bcskbc-MuiPaper-root {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-  }
-  .css-v6wbn9-MuiAvatar-root {
-    margin-top: -51px !important;
-  }
-  .css-so23x5-MuiPaper-root {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-  }
-  .MuiPaper-root ::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-  }
-  
-  /* pagenation */
-  
-  .pagenationBtts {
-    width: 100%;
-    list-style: none;
-    height: 0px;
-    display: flex;
-    justify-content: right;
-    margin-top: -38px;
-  }
-  
-  .pagenationBtts a {
-    padding-top: 15px;
-    width: 400px;
-    top: 40;
-    left: 90%;
-    border-radius: 5px;
-    font-size: 1px;
-    color: "#2b2e2b";
-    cursor: pointer;
-  }
-  
-  .pagenationBtts a:hover {
-    color: white;
-  }
-  
-  .dragged .item {
-    opacity: 0;
-  }
-  
-  .pagenationActive a {
-    color: white;
-    background-color: #2b2eff;
-  }
-  
-  .button-contianer {
-    display: flex;
-    justify-content: end;
-  }
-  
-  .img-container {
+  font-family: "DMSans-Bold";
+  src: url("../fonts/DMSans-Bold.ttf");
+}
+@font-face {
+  font-family: "DMSans-BoldItalic";
+  src: url("../fonts/DMSans-BoldItalic.ttf");
+}
+@font-face {
+  font-family: "DMSans-Italic";
+  src: url("../fonts/DMSans-Italic.ttf");
+}
+@font-face {
+  font-family: "DMSans-Medium";
+  src: url("../fonts/DMSans-Medium.ttf");
+}
+@font-face {
+  font-family: "DMSans-MediumItalic";
+  src: url("../fonts/DMSans-MediumItalic.ttf");
+}
+@font-face {
+  font-family: "DMSans-Regular";
+  src: url("../fonts/DMSans-Regular.ttf");
+}
+
+html {
+  background-color: #fff;
+  height: 100%;
+}
+.App {
+  background-color: #fff;
+  background-size: cover;
+  height: 100%;
+}
+
+.MuiTabs-indicator {
+  background-color: transparent !important;
+}
+
+.css-bcskbc-MuiPaper-root {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.css-v6wbn9-MuiAvatar-root {
+  margin-top: -51px !important;
+}
+.css-so23x5-MuiPaper-root {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.MuiPaper-root ::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.dragged .item {
+  opacity: 0;
+}
+
+
+.button-contianer {
   display: flex;
-    overflow: hidden;
-    width: 100%;
-    border: 5px solid #ffffff;
-    border-radius: 10px;
-  }
+  justify-content: end;
+}
+
+.img-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  border: 5px solid #ffffff;
+  border-radius: 10px;
+}
+
+.dl-list {
+  display: flex;
+  position: relative;
+}
+
+/* tale card avator border */
+.backgroundimges {
+  background-image: url(../images/top-img-new5.png);
+  height: 106px;
+  border-radius: 14px;
+  background-repeat: no-repeat;
+}
+
+/* tree card */
+.tree ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+  color: #b2b4b8;
+  border-width: 12px;
+  position: relative;
+}
+.tree:before,
+.tree ul:before {
+  content: "";
+  display: block;
+  width: 0px;
+  position: absolute;
+  top: 0;
+  bottom: 37px;
+  left: 8px;
+  border-left: 2px solid;
+  z-index: -1;
+}
+.tree li {
+  font-weight: bold;
+  line-height: 3em;
+  margin: 0;
+  padding: 1.5em 0 0 1em;
+  position: relative;
+  z-index: 99;
+}
+.tree li:before {
+  border-top: 2px solid;
+  content: "";
+  display: block;
+  height: 100%;
+  left: 8px;
+  margin-top: 1em;
+  position: absolute;
+  top: 2.5em;
+  width: 20px;
+}
+.tree li:last-child:before {
+  bottom: 0;
+  height: auto;
+  top: 1.8em;
+}
+.tree > li:before {
+  border-top: none !important;
+}
+.tree li div {
+  margin: 0;
+}
+
+ul.tree {
+  margin-left: -44px;
+  list-style: none;
+}
+ul.tree:before {
+  border-left: none;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+}

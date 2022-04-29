@@ -1,18 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import ellipsis from "../../images/Ellipsis.png";
+import ellipsis from "../..//components/images/Ellipsis.png";
 import List from "@mui/material/List";
+import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import filelogo from "../../images/filelogo.png";
-import imglogo from "../../images/imaglogo.png";
-import { CustomButton, NoteIcon } from "../../theme/MuiComponents";
+import filelogo from "../../components/images/filelogo.png";
+import imglogo from "../../components/images/imaglogo.png";
+import { CustomButton, NoteIcon } from "../theme/MuiComponents";
+import OptionModal from "../Modals/OptionModal";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#F2F4F5",
@@ -22,39 +24,38 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   borderRadius: 14,
   width: 360,
-  height: 800,
+  height: 840,
 }));
 
 function ThoughtCard(props: any) {
-  return (
-    <Grid item xs={12} sm={4} md={4} marginTop={10} marginLeft={4}>
-      <Item elevation={0}>
-        <Grid
-          style={{
-            background:
-              "linear-gradient(129.37deg, rgba(32, 0, 173, 0.5) -12.98%, rgba(57, 137, 238, 0.5) 91.72%)",
-            marginTop: -16,
-            borderTopLeftRadius: 14,
-            borderTopRightRadius: 14,
-            padding: 35,
-            clipPath:
-              "polygon(50% 0%, 100% 0, 100% 100%, 50% 70%, 0 100%, 0 0)",
-          }}
-        ></Grid>
-        <Avatar
-          sx={{
-            bgcolor: "#85CEFF",
-            width: 80,
-            display: "inline-flex",
-            height: 80,
-            fontWeight: "bold",
-            color: "blue",
-            marginTop: -6,
-          }}
-          src={props.item.image}
-          alt="B"
-        />
+  const [open, setOpen] = useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Grid item xs={12} sm={4} md={4} marginTop={9} marginLeft={4}>
+      <Item elevation={0}>
+        <Grid className="backgroundimges">
+          <Avatar
+            sx={{
+              bgcolor: "#85CEFF",
+              width: 80,
+              display: "inline-flex",
+              height: 80,
+              fontWeight: "bold",
+              color: "blue",
+              marginTop: 3,
+            }}
+            src={props.item.image}
+            alt="B"
+          />
+        </Grid>
         <Typography
           style={{
             fontWeight: "bold",
@@ -100,7 +101,7 @@ function ThoughtCard(props: any) {
             {"<Status>"}
           </Typography>
         </Grid>
-        <div style={{ overflowY: "scroll", height: 588 }}>
+        <div style={{ overflowY: "scroll", height: 630 }}>
           {props.item.desc.map(
             (sub: any, i: any) =>
               props.item.id === 2 && (
@@ -135,8 +136,8 @@ function ThoughtCard(props: any) {
                         <ListItemAvatar>
                           <Avatar
                             sx={{
-                              width: 60,
-                              height: 60,
+                              width: 50,
+                              height: 50,
                               fontWeight: "bold",
                               color: "blue",
                             }}
@@ -190,10 +191,17 @@ function ThoughtCard(props: any) {
                         />
                       </ListItem>
                     </List>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={ellipsis}
-                      sx={{ width: 25, height: 25, paddingLeft: 1 }}
+                    <IconButton onClick={handleClickOpen}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={ellipsis}
+                        sx={{ width: 25, height: 25, marginTop: -6 }}
+                      />
+                    </IconButton>
+                    <OptionModal
+                      open={open}
+                      handleClickOpen={handleClickOpen}
+                      handleClose={handleClose}
                     />
                   </div>
                   <Grid style={{ display: "flex", marginBottom: 10 }}>
@@ -217,9 +225,8 @@ function ThoughtCard(props: any) {
             style={{
               marginLeft: 18,
               textAlign: "left",
-              fontSize: 14,
-              fontWeight: "bold",
-              fontFamily: "DMSans-Medium",
+              fontSize: 16,
+              fontFamily: "DMSans-bold",
               marginTop: 20,
               marginBottom: 2,
             }}
@@ -255,10 +262,17 @@ function ThoughtCard(props: any) {
                     >
                       {Object.values(sub).map((a: any) => a)}
                     </Typography>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={ellipsis}
-                      sx={{ width: 25, height: 25 }}
+                    <IconButton onClick={handleClickOpen}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={ellipsis}
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    </IconButton>
+                    <OptionModal
+                      open={open}
+                      handleClickOpen={handleClickOpen}
+                      handleClose={handleClose}
                     />
                   </Grid>
                   <Divider />
@@ -299,10 +313,17 @@ function ThoughtCard(props: any) {
                 >
                   {Object.values(sub).map((a: any) => a)}
                 </Typography>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={ellipsis}
-                  sx={{ width: 25, height: 25 }}
+                <IconButton onClick={handleClickOpen}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={ellipsis}
+                    sx={{ width: 25, height: 25 }}
+                  />
+                </IconButton>
+                <OptionModal
+                  open={open}
+                  handleClickOpen={handleClickOpen}
+                  handleClose={handleClose}
                 />
               </Grid>
             </Grid>
@@ -376,10 +397,17 @@ function ThoughtCard(props: any) {
                     />
                   </ListItem>
                 </List>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={ellipsis}
-                  sx={{ width: 25, height: 25, paddingLeft: 1 }}
+                <IconButton onClick={handleClickOpen}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={ellipsis}
+                    sx={{ width: 25, height: 25, marginTop: -6 }}
+                  />
+                </IconButton>
+                <OptionModal
+                  open={open}
+                  handleClickOpen={handleClickOpen}
+                  handleClose={handleClose}
                 />
               </div>
               <Grid style={{ display: "flex", marginBottom: 10 }}>
@@ -426,10 +454,17 @@ function ThoughtCard(props: any) {
                     >
                       {Object.values(sub).map((a: any) => a)}
                     </Typography>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={ellipsis}
-                      sx={{ width: 25, height: 25 }}
+                    <IconButton onClick={handleClickOpen}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={ellipsis}
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    </IconButton>
+                    <OptionModal
+                      open={open}
+                      handleClickOpen={handleClickOpen}
+                      handleClose={handleClose}
                     />
                   </Grid>
                 </Grid>
@@ -442,3 +477,4 @@ function ThoughtCard(props: any) {
 }
 
 export default ThoughtCard;
+

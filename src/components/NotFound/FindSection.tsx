@@ -3,8 +3,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
-import NoSearch from "../../images/No-Search-Results.png";
-import { theme } from "../../theme/default";
+import NoSearch from "../../components/images/No-Search-Results.png";
+import { theme } from "../../components/theme/default";
 
 function NotFound() {
   return (

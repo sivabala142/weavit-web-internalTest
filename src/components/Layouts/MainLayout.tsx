@@ -16,7 +16,7 @@ export default function MainLayout(props: MainLayoutProps) {
         style={{ 
           width: "100%",
           padding: theme.spacing(3),
-          marginLeft: theme.spacing(6),
+          marginLeft: theme.spacing(2),
           overflow: "hidden",
           height: "auto",
         }}

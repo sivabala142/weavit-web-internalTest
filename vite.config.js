@@ -18,20 +18,23 @@ export default defineConfig(({ mode }) => {
     return {
         optimizeDeps: {
             esbuildOptions: {
-              loader: {
-                '.js': 'jsx',
-              },
+                loader: {
+                    '.js': 'jsx',
+                },
             },
-          },
+        },
         preview: {
             port: 8080,
+        },
+        server: {
+            host: '0.0.0.0',
         },
         define: envWithProcessPrefix,
         resolve: {
             alias: {
                 'react-native': resolve('./src/react-native-web.js'),
                 'react-native/Libraries/Image/resolveAssetSource': resolve(
-                  './src/react-native-web.js',
+                    './src/react-native-web.js',
                 ),
                 'victory-native': 'victory',
                 'react-native-svg': 'react-native-svg-web',

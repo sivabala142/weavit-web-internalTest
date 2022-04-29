@@ -16,6 +16,7 @@ import { DocumentNode, GraphQLError } from 'graphql';
 import { GET_ALL_MEMO } from '../../services/queries';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import moment from 'moment'
+import {parseJSONString} from '../../utils'
 
 function NoteCard() {
 
@@ -36,7 +37,7 @@ function NoteCard() {
     };
     queryMemos({ variables });
   };
-  console.log("data", data?.getAllMemo?.memos);
+  console.log("data", parseJSONString(data?.getAllMemo?.memos[1].stringifiedContent));
   
 
   return (

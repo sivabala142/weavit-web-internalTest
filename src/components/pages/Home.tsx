@@ -14,7 +14,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import NotFound from '../../components/NotFound/FindSection';
 import NoteCard from '../Cards/NoteCard';
-import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
+import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import { GET_ALL_MEMO } from '../../services/queries';
 
@@ -25,20 +25,17 @@ function Home() {
     const [thoughtData, setThoughtData] = useState([]);
     const [fetch, getFetch] = useState(dataa);
 
-    const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
-        IGetAllMemoQueryResult,
-        IGetAllMemoQueryVariables
-    >(GET_ALL_MEMO);
+    const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO);
 
     useEffect(() => {
-        let memoInfo=[]             
-        fetchTimeline()
-        memoInfo.push(data?.getAllMemo.memos, ...thoughtData)
-        setThoughtData(memoInfo)
+        let memoInfo = [];
+        fetchTimeline();
+        memoInfo.push(data?.getAllMemo.memos, ...thoughtData);
+        setThoughtData(memoInfo);
     }, []);
 
-// console.log("djsgfhjsfg",data?.getAllMemo.memos[1]);
-// console.log("locatiomn",location.state.click); 
+    // console.log("djsgfhjsfg",data?.getAllMemo.memos[1]);
+    // console.log("locatiomn",location.state.click);
 
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
@@ -104,7 +101,6 @@ function Home() {
 
     return (
         <>
-
             <div className="button-contianer">
                 <IconButton
                     onClick={() => {
@@ -138,53 +134,56 @@ function Home() {
                         Your Thought Space
                     </Typography>
                 </Grid>
-                {data && data?.getAllMemo?.memos.map((item, index) => index <  0 && (
-                    <Chip 
-                        // onClick={() => {
-                        //     if (item.id) {
-                        //         handleHorizantalScroll(elementRef.current, 25, 100, -28);
-                        //     }
-                        // }}
-                        deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
-                        label={item?.displayName}
-                        onDelete={() => deleteItem(index)}
-                        style={{
-                            marginLeft: -42,
-                            marginRight: 50,
-                            marginTop: 28,
-                            backgroundColor: '#DADDE2',
-                            fontFamily: 'DMSans-Medium',
-                        }}
-                    />
-                ))}
+                {data &&
+                    data?.getAllMemo?.memos.map(
+                        (item, index) =>
+                            index < 0 && (
+                                <Chip
+                                    // onClick={() => {
+                                    //     if (item.id) {
+                                    //         handleHorizantalScroll(elementRef.current, 25, 100, -28);
+                                    //     }
+                                    // }}
+                                    deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
+                                    label={item?.displayName}
+                                    onDelete={() => deleteItem(index)}
+                                    style={{
+                                        marginLeft: -42,
+                                        marginRight: 50,
+                                        marginTop: 12,
+                                        backgroundColor: '#DADDE2',
+                                        fontFamily: 'DMSans-Medium',
+                                        color: '#313233',
+                                    }}
+                                />
+                            ),
+                    )}
                 {data?.getAllMemo.memos.length !== 0 && (
                     <Chip
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
-                        label={'Clear All'}
+                        label={'Close All'}
                         onDelete={() => ClearAll()}
                         style={{
                             marginLeft: -40,
                             marginRight: 50,
-                            marginTop: 28,
+                            marginTop: 12,
                             color: 'gray',
                             fontFamily: 'DMSans-Medium',
                         }}
                     />
                 )}
             </div>
-            {location.state.click === false ? 
-             <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
-             {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
-                 <div style={{ marginTop: -60, marginLeft: -20 }}>
-                     
-                     <ThoughtCard item={data?.getAllMemo.memos[1]} />
-                 </div>
-             {/* ))} */}
-             {post.length === 0 && <NotFound />}
-         </div>
-            : null}
-           
+            {/* {location.state.click === false ?  */}
+            <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
+                {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
+                <div style={{ marginTop: -60, marginLeft: -20 }}>
+                    <ThoughtCard item={data?.getAllMemo.memos[1]} />
+                </div>
+                {/* ))} */}
+                {data?.getAllMemo.memos.length === 0 && <NotFound />}
+            </div>
+            {/* : null} */}
         </>
     );
 }

@@ -35,7 +35,7 @@ function Home() {
     }, []);
 
     // console.log("djsgfhjsfg",data?.getAllMemo.memos[1]);
-    console.log("locatiomn",location.state.click);
+    // console.log("locatiomn",location?.state?.click);
 
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
@@ -175,7 +175,7 @@ function Home() {
                 )}
             </div>
 
-            { !location.state.click &&
+            { location?.state?.click === false ?
             <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
                 {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
                 <div style={{ marginTop: -60, marginLeft: -20 }}>
@@ -184,7 +184,7 @@ function Home() {
                 {/* ))} */}
                 {data?.getAllMemo.memos.length === 0 && <NotFound />}
             </div>
-             } 
+           : null }
         </>
     );
 }

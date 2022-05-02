@@ -17,10 +17,10 @@ import { GET_ALL_MEMO } from '../../services/queries';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import moment from 'moment'
 import { parseJSONString } from '../../utils'
-import {useLazyQueryNoCache,PAGE_SIZE} from '../../store/index'
+import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
 
 function NoteCard() {
-  const history = useNavigate();
+  const navigate  = useNavigate();
   const [clickEvent, setClickEvent] = useState(false)
   const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
     IGetAllMemoQueryResult,
@@ -34,18 +34,19 @@ function NoteCard() {
   const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
     const variables: IGetAllMemoQueryVariables = {
       pageSize: PAGE_SIZE,
-      skipToken: 0,      
+      skipToken: 0,
       ...(addition ?? {}),
     };
     queryMemos({ variables });
   };
   // console.log("data", parseJSONString(data?.getAllMemo?.memos[1].stringifiedContent));
 
-  const navigatePath = (url:any, id:any) => {    
-    setClickEvent(true)
-   history(url, {state: {id:{nodeID:id.nodeID,type:id.type},click:clickEvent}}); 
-   
+  const navigatePath = (url: any, id: any) => {
+     setClickEvent(!clickEvent)
+    console.log("clickEvent",clickEvent);
+    navigate (url, { state: { id: { nodeID: id.nodeID, type: id.type }, click: clickEvent } });
   }
+
 
   return (
     <div>
@@ -107,7 +108,7 @@ function NoteCard() {
             </Grid>
             <Divider />
             <CustomButton
-              onClick={() => navigatePath('/', { id: item })}
+              onClick={() =>{ navigatePath('/', { id: item })}}
               color="inherit"
               variant="outlined"
               startIcon={<NoteIcon />}

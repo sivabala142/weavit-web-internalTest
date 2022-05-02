@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
@@ -13,11 +13,45 @@ import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import NotFound from '../../components/NotFound/FindSection';
+import NoteCard from '../Cards/NoteCard';
+import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
+import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
+import { GET_ALL_MEMO } from '../../services/queries';
 
 function Home() {
-    const data = getData();
-    const [post, setPost] = useState(data);
-    const [fetch, getFetch] = useState(data);
+    const dataa = getData();
+    const location = useLocation();
+    const [post, setPost] = useState(dataa);
+    const [thoughtData, setThoughtData] = useState([]);
+    const [fetch, getFetch] = useState(dataa);
+
+    const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
+        IGetAllMemoQueryResult,
+        IGetAllMemoQueryVariables
+    >(GET_ALL_MEMO);
+
+    useEffect(() => {
+        let memoInfo=[]             
+        fetchTimeline()
+        memoInfo.push(data?.getAllMemo.memos, ...thoughtData)
+        setThoughtData(memoInfo)
+    }, []);
+
+// console.log("djsgfhjsfg",data?.getAllMemo.memos[1]);
+// console.log("locatiomn",location.state.click); 
+
+    const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
+        const variables: IGetAllMemoQueryVariables = {
+            pageSize: PAGE_SIZE,
+            skipToken: 0,
+            targetedNodeID: location.state.id.nodeID,
+            targetedNodeLabel: location?.state?.id?.type,
+            ...(addition ?? {}),
+        };
+        queryMemos({ variables });
+    };
+
+    // console.log("thoughtData", thoughtData);
 
     const deleteItem = (index: any) => {
         const newTodoItems = [...fetch];
@@ -70,6 +104,7 @@ function Home() {
 
     return (
         <>
+
             <div className="button-contianer">
                 <IconButton
                     onClick={() => {
@@ -103,15 +138,15 @@ function Home() {
                         Your Thought Space
                     </Typography>
                 </Grid>
-                {fetch.map((item, index) => (
-                    <Chip
-                        onClick={() => {
-                            if (item.id) {
-                                handleHorizantalScroll(elementRef.current, 25, 100, -28);
-                            }
-                        }}
+                {data && data?.getAllMemo?.memos.map((item, index) => index <  0 && (
+                    <Chip 
+                        // onClick={() => {
+                        //     if (item.id) {
+                        //         handleHorizantalScroll(elementRef.current, 25, 100, -28);
+                        //     }
+                        // }}
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
-                        label={item.title}
+                        label={item?.displayName}
                         onDelete={() => deleteItem(index)}
                         style={{
                             marginLeft: -42,
@@ -122,7 +157,7 @@ function Home() {
                         }}
                     />
                 ))}
-                {post.length !== 0 && (
+                {data?.getAllMemo.memos.length !== 0 && (
                     <Chip
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
@@ -138,15 +173,18 @@ function Home() {
                     />
                 )}
             </div>
-
-            <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
-                {post.map((item, index) => (
-                    <div key={index} style={{ marginTop: -60, marginLeft: -20 }}>
-                        <ThoughtCard item={item} />
-                    </div>
-                ))}
-                {post.length === 0 && <NotFound />}
-            </div>
+            {location.state.click === false ? 
+             <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
+             {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
+                 <div style={{ marginTop: -60, marginLeft: -20 }}>
+                     
+                     <ThoughtCard item={data?.getAllMemo.memos[1]} />
+                 </div>
+             {/* ))} */}
+             {post.length === 0 && <NotFound />}
+         </div>
+            : null}
+           
         </>
     );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import cookies from 'js-cookie';
 import fetch from 'cross-fetch';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route , Navigator} from 'react-router-dom';
 import { ProtectedRoute } from './layout';
 import { GlobalProvider } from './hooks/GlobalContext';
 import { CookiesProvider } from 'react-cookie';
@@ -26,7 +26,7 @@ console.log("API_BASE_URL",API_BASE_URL);
 
 const authLink = setContext((_, { headers }) => {
     // const token = cookies.get('access_token_weavit');
-    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImM2NzNkM2M5NDdhZWIxOGI2NGU1OGUzZWRlMzI1NWZiZjU3NTI4NWIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MTI0NzIwNiwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUxMjQ3MjA2LCJleHAiOjE2NTEyNTA4MDYsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.FXK-g4dYZ7ribD9XmyTLI2J-X9WeLXhl0trV5CLJFP_5F5YLblCIkPuMrCFHSDyAGmzGZLM84gGwS_soifYsTOLKQ6fGCvLixkR8KFd8RWN_AbMH-XnSzBxd43pUik6dqHfWmHd1_FiPm5Ec_pwXpHBgckFn0xefvhkRiLaDKrCiK7SlVhl0q5JbN2h8iHdex7-LZ7T94VjrPgg5rdqcnEmMVE-2VTqFTqMqXR8Nm2MB5RGCZ56M3N8L5C4VhtnHDRcerTyCDwYahOo02dTuvjwNdoF7LeC1-wy1Vo2QpuMNKQ9WmQu_ZPBh3HJ5NM_sQWQDp9dMlHddlajuFmW3-A';
+    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MTQ2Nzk4NiwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUxNDY3OTg2LCJleHAiOjE2NTE0NzE1ODYsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.OdjWcHkfj1x_h3ZWXXETo31Qqei_Kzq80R0CLXKkZTkmkiJl6XeDa4TSiosoFHK7IKAYl3PDd4irX94uJob2Ny1zgOdTNj_6HI_GPYMXbeZdNbh0dpfBHS_lZu90Pn34l3eiEVEZjLf3Ux6iU3o39MJnRhiSrdFVmmxwBj_NOJGZ46r-LGCmTPt1f4JGorPnhuFNdmEMXJcP5AAheLYakseneLj505UA74R_WbJ7N9bmvzUwgMrTv3YN8GYGnGZmxv5ii3HqcXTJ5kWoSrna0jHtWcsBcAHQJUSBdhBzW0P4sgvxAqx1I_kizQEgy6DWG7lc68iNRe_bvHDyvpjM_g';
     // return the headers to the context so httpLink can read them
     
     return { 
@@ -53,6 +53,7 @@ function App() {
                             <Route path="/" element={<ProtectedRoute />}>
                                     {/* <Route path="/" element={<Dashboard />} /> */}
                                     <Route path="/" element={<Home />} />
+                                    {/* <Route path="/comp" element={<Home />} /> */}
                             </Route>
                         </Routes>
                     </GlobalProvider>

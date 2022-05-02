@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
@@ -11,15 +12,16 @@ import { CustomButton, NoteIcon } from "../theme/MuiComponents";
 
 import { useGlobalContext } from '../../hooks/GlobalContext';
 // import { WIButton } from '@weavit/weavit-material-ui';
-import { useQuery, gql, useMutation, ApolloClient, createHttpLink, DefaultOptions, from, InMemoryCache, LazyQueryHookOptions, OperationVariables, QueryTuple, TypedDocumentNode, useLazyQuery } from "@apollo/client";
 import { DocumentNode, GraphQLError } from 'graphql';
 import { GET_ALL_MEMO } from '../../services/queries';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import moment from 'moment'
-import {parseJSONString} from '../../utils'
+import { parseJSONString } from '../../utils'
+import {useLazyQueryNoCache,PAGE_SIZE} from '../../store/index'
 
 function NoteCard() {
-
+  const history = useNavigate();
+  const [clickEvent, setClickEvent] = useState(false)
   const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
     IGetAllMemoQueryResult,
     IGetAllMemoQueryVariables
@@ -32,13 +34,18 @@ function NoteCard() {
   const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
     const variables: IGetAllMemoQueryVariables = {
       pageSize: PAGE_SIZE,
-      skipToken: 0,
+      skipToken: 0,      
       ...(addition ?? {}),
     };
     queryMemos({ variables });
   };
-  console.log("data", parseJSONString(data?.getAllMemo?.memos[1].stringifiedContent));
-  
+  // console.log("data", parseJSONString(data?.getAllMemo?.memos[1].stringifiedContent));
+
+  const navigatePath = (url:any, id:any) => {    
+    setClickEvent(true)
+   history(url, {state: {id:{nodeID:id.nodeID,type:id.type},click:clickEvent}}); 
+   
+  }
 
   return (
     <div>
@@ -100,7 +107,7 @@ function NoteCard() {
             </Grid>
             <Divider />
             <CustomButton
-              // onClick={() => navigate('about', {state: item.id})}
+              onClick={() => navigatePath('/', { id: item })}
               color="inherit"
               variant="outlined"
               startIcon={<NoteIcon />}
@@ -117,12 +124,3 @@ function NoteCard() {
 
 export default NoteCard;
 
-export function useLazyQueryNoCache<TData = any, TVariables = OperationVariables>(query: DocumentNode | TypedDocumentNode<TData, TVariables>, options?: LazyQueryHookOptions<TData, TVariables> | undefined): QueryTuple<TData, TVariables> {
-  return useLazyQuery<TData, TVariables>(query, {
-    fetchPolicy: 'no-cache',
-    nextFetchPolicy: 'no-cache',
-    ...(options ?? {}),
-  });
-}
-
-export const PAGE_SIZE = 50;

@@ -20,8 +20,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { theme } from "../../theme/default";
+import moment from 'moment'
 
-function OptionModal(props: any) {
+function OptionModal(props: any){
 
   return (
     <div>
@@ -87,7 +88,7 @@ function OptionModal(props: any) {
             </Grid>
             <Grid item xs>
               <Typography fontSize={14} fontFamily="DMSans-Medium">
-                6 days ago
+              {moment(props?.createdDate).format('dddd,MMM DD, YYYY')}
               </Typography>
             </Grid>
           </Grid>
@@ -103,7 +104,7 @@ function OptionModal(props: any) {
             </Grid>
             <Grid item xs>
               <Typography fontSize={14} fontFamily="DMSans-Medium">
-                1 day ago
+                 {moment(props?.lastViewes).format('dddd,MMM DD, YYYY')}
               </Typography>
             </Grid>
           </Grid>

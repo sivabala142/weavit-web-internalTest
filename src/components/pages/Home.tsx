@@ -28,27 +28,32 @@ function Home() {
     const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO);
 
     useEffect(() => {
-        let memoInfo = [];
-        fetchTimeline();
-        memoInfo.push(data?.getAllMemo.memos, ...thoughtData);
-        setThoughtData(memoInfo);
-    }, []);
+        if(location.state?.click){
+            fetchTimeline();
+            let memoInfo = [];       
+            memoInfo.push(data?.getAllMemo.memos, ...thoughtData);
+            setThoughtData(memoInfo);
+        }
+    }, [location?.state]);
 
-    // console.log("djsgfhjsfg",data?.getAllMemo.memos[1]);
-    // console.log("locatiomn",location?.state?.click);
+    // useEffect(()=>{
+    //     fetchTimeline();
+    // },[location?.state])
+    
+    // console.log("location",location.state?.id?.id?.nodeID);
 
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
             pageSize: PAGE_SIZE,
             skipToken: 0,
-            targetedNodeID: location.state.id.nodeID,
-            targetedNodeLabel: location?.state?.id?.type,
+            targetedNodeID: location.state?.id?.id?.nodeID,
+            targetedNodeLabel: location?.state?.id?.id?.type,
             ...(addition ?? {}),
         };
+        // console.log("variables",variables,location?.state,);
+
         queryMemos({ variables });
     };
-
-    // console.log("thoughtData", thoughtData);
 
     const deleteItem = (index: any) => {
         const newTodoItems = [...fetch];
@@ -99,6 +104,7 @@ function Home() {
         }, speed);
     };
 
+
     return (
         <>
             <div className="button-contianer">
@@ -134,9 +140,11 @@ function Home() {
                         Your Thought Space
                     </Typography>
                 </Grid>
+                 { location?.state?.click === false ?
+                 <>
                 {data &&
                     data?.getAllMemo?.memos.map(
-                        (item, index) =>
+                        (item, index = 1) =>
                             index < 0 && (
                                 <Chip
                                     // onClick={() => {
@@ -157,8 +165,10 @@ function Home() {
                                     }}
                                 />
                             ),
-                    )}
-                {data?.getAllMemo.memos.length !== 0 && (
+                    )} 
+                    </>
+                    : null}
+                {data?.getAllMemo.memos?.length  === 1 && (
                     <Chip
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
@@ -175,16 +185,16 @@ function Home() {
                 )}
             </div>
 
-            { location?.state?.click === false ?
+            { location?.state?.click === true ?
             <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
                 {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
                 <div style={{ marginTop: -60, marginLeft: -20 }}>
-                    <ThoughtCard item={data?.getAllMemo.memos[1]} />
+                    <ThoughtCard item={data?.getAllMemo.memos[2]?.attachedNode[1]?.displayName} />
                 </div>
                 {/* ))} */}
-                {data?.getAllMemo.memos.length === 0 && <NotFound />}
+                
             </div>
-           : null }
+      :  <NotFound />}  
         </>
     );
 }

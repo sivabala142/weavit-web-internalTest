@@ -14,13 +14,16 @@ import { useGlobalContext } from '../../hooks/GlobalContext';
 // import { WIButton } from '@weavit/weavit-material-ui';
 import { DocumentNode, GraphQLError } from 'graphql';
 import { GET_ALL_MEMO } from '../../services/queries';
-import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
+import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables, IMemo } from '../../graphql-models';
 import moment from 'moment'
 import { parseJSONString } from '../../utils'
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
+import Home from "../pages/Home";
+import {parseBlockContent} from '../constants'
+
 
 function NoteCard() {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const [clickEvent, setClickEvent] = useState(false)
   const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
     IGetAllMemoQueryResult,
@@ -31,6 +34,15 @@ function NoteCard() {
     fetchTimeline();
   }, []);
 
+  useEffect(() => {
+    if(clickEvent){
+      setClickEvent(true)
+    }else{
+      setClickEvent(false)
+    }
+   
+  }, [clickEvent])
+
   const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
     const variables: IGetAllMemoQueryVariables = {
       pageSize: PAGE_SIZE,
@@ -39,13 +51,17 @@ function NoteCard() {
     };
     queryMemos({ variables });
   };
-  // console.log("data", parseJSONString(data?.getAllMemo?.memos[1].stringifiedContent));
 
   const navigatePath = (url: any, id: any) => {
-     setClickEvent(!clickEvent)
-    console.log("clickEvent",clickEvent);
-    navigate (url, { state: { id: { nodeID: id.nodeID, type: id.type }, click: clickEvent } });
+    setClickEvent(true)
+    // console.log("clickEvent", id);
+    navigate(url, { state: { id , click: clickEvent } });
   }
+ console.log('getallmemos:',data?.getAllMemo?.memos);
+ 
+
+const stringified =  parseBlockContent(data?.getAllMemo?.memos[1])
+console.log('stringified',stringified);
 
 
   return (
@@ -107,8 +123,9 @@ function NoteCard() {
               />
             </Grid>
             <Divider />
+            
             <CustomButton
-              onClick={() =>{ navigatePath('/', { id: item })}}
+              onClick={() => { navigatePath('/', { id: item }) }}
               color="inherit"
               variant="outlined"
               startIcon={<NoteIcon />}
@@ -118,10 +135,12 @@ function NoteCard() {
           </Grid>
 
         </Fragment>
-      ))}
+      ))}   
     </div>
   );
 }
 
 export default NoteCard;
+
+
 

@@ -6,13 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ellipsis from '../..//components/images/Ellipsis.png';
-import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import filelogo from '../../components/images/filelogo.png';
-import imglogo from '../../components/images/imaglogo.png';
 import { CustomButton, NoteIcon } from '../theme/MuiComponents';
 import OptionModal from '../Modals/OptionModal';
 import moment from 'moment';
@@ -29,8 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function ThoughtCard(props: any) {
-    const [open, setOpen] = useState(false);
-    console.log('props', props);
+    const [open, setOpen] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);

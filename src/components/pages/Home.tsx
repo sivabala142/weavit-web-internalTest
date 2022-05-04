@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,7 +13,6 @@ import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import NotFound from '../../components/NotFound/FindSection';
-import NoteCard from '../Cards/NoteCard';
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import { GET_ALL_MEMO } from '../../services/queries';
@@ -28,19 +27,13 @@ function Home() {
     const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO);
 
     useEffect(() => {
-        if(location.state?.click){
+        if (location.state?.click) {
             fetchTimeline();
-            let memoInfo = [];       
-            memoInfo.push(data?.getAllMemo.memos, ...thoughtData);
+            let memoInfo = [];
+            memoInfo.push(data?.getAllMemo?.memos, ...thoughtData);
             setThoughtData(memoInfo);
         }
-    }, [location?.state]);
-
-    // useEffect(()=>{
-    //     fetchTimeline();
-    // },[location?.state])
-    
-    // console.log("location",location.state?.id?.id?.nodeID);
+    }, [location?.state]);;
 
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
@@ -50,8 +43,6 @@ function Home() {
             targetedNodeLabel: location?.state?.id?.id?.type,
             ...(addition ?? {}),
         };
-        // console.log("variables",variables,location?.state,);
-
         queryMemos({ variables });
     };
 
@@ -140,35 +131,30 @@ function Home() {
                         Your Thought Space
                     </Typography>
                 </Grid>
-                 { location?.state?.click === false ?
-                 <>
-                {data &&
-                    data?.getAllMemo?.memos.map(
-                        (item, index = 1) =>
-                            index < 0 && (
-                                <Chip
-                                    // onClick={() => {
-                                    //     if (item.id) {
-                                    //         handleHorizantalScroll(elementRef.current, 25, 100, -28);
-                                    //     }
-                                    // }}
-                                    deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
-                                    label={item?.displayName}
-                                    onDelete={() => deleteItem(index)}
-                                    style={{
-                                        marginLeft: -42,
-                                        marginRight: 50,
-                                        marginTop: 12,
-                                        backgroundColor: '#DADDE2',
-                                        fontFamily: 'DMSans-Medium',
-                                        color: '#313233',
-                                    }}
-                                />
-                            ),
-                    )} 
+                {location?.state?.click === false ?
+                    <>
+                        {data &&
+                            data?.getAllMemo?.memos.map(
+                                (item, index = 1) =>
+                                    index < 0 && (
+                                        <Chip                                            
+                                            deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
+                                            label={item?.displayName}
+                                            onDelete={() => deleteItem(index)}
+                                            style={{
+                                                marginLeft: -42,
+                                                marginRight: 50,
+                                                marginTop: 12,
+                                                backgroundColor: '#DADDE2',
+                                                fontFamily: 'DMSans-Medium',
+                                                color: '#313233',
+                                            }}
+                                        />
+                                    ),
+                            )}
                     </>
                     : null}
-                {data?.getAllMemo.memos?.length  === 1 && (
+                {data?.getAllMemo.memos?.length === 1 && (
                     <Chip
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
@@ -185,16 +171,13 @@ function Home() {
                 )}
             </div>
 
-            { location?.state?.click === true ?
-            <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
-                {/* {data?.getAllMemo.memos.map((item, index) => (                     */}
-                <div style={{ marginTop: -60, marginLeft: -20 }}>
-                    <ThoughtCard item={data?.getAllMemo.memos[2]?.attachedNode[1]?.displayName} />
+            {location?.state?.click === true ?
+                <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
+                    <div style={{ marginTop: -60, marginLeft: -20 }}>
+                        <ThoughtCard item={thoughtData} />
+                    </div>
                 </div>
-                {/* ))} */}
-                
-            </div>
-      :  <NotFound />}  
+                : <NotFound />}
         </>
     );
 }

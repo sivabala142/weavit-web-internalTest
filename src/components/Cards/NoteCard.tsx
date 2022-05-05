@@ -7,10 +7,11 @@ import Typography from "@mui/material/Typography";
 import ellipsis from "../images/Ellipsis.png";
 import { CustomButton, NoteIcon } from "../theme/MuiComponents";
 import { GET_ALL_MEMO } from '../../services/queries';
-import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables} from '../../graphql-models';
+import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import moment from 'moment'
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
 import { parseBlockContent } from '../constants'
+import { link } from "fs";
 
 function NoteCard() {
   const navigate = useNavigate();
@@ -48,7 +49,8 @@ function NoteCard() {
   }
 
   const stringified = parseBlockContent(data?.getAllMemo?.memos[1]);
-  const parsedContent=  stringified?.entityMap[1].data.displayName;
+  const parsedContent = stringified?.entityMap[0].data.displayName;
+  const parsedContentt = stringified?.entityMap[1].data.displayName;
 
   return (
     <>
@@ -95,8 +97,13 @@ function NoteCard() {
                     marginTop: 4,
                   }}
                 >
-                  {item.content}
+                  {item.content.includes(parsedContent, parsedContentt) ?
+                    <div dangerouslySetInnerHTML={{
+                      __html: item.content.replace(parsedContent, `<a href="">${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`)
+                    }} />
+                    : item.content}
                 </Typography>
+
                 <Avatar
                   alt="Remy Sharp"
                   src={ellipsis}

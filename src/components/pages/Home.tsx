@@ -34,7 +34,7 @@ function Home() {
             setThoughtData(memoInfo);
         }
     }, [location?.state]);;
-
+    
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
             pageSize: PAGE_SIZE,

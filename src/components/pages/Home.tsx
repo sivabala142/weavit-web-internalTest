@@ -33,8 +33,8 @@ function Home() {
             memoInfo.push(data?.getAllMemo?.memos, ...thoughtData);
             setThoughtData(memoInfo);
         }
-    }, [location?.state]);;
-    
+    }, [location?.state]);
+
     const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
         const variables: IGetAllMemoQueryVariables = {
             pageSize: PAGE_SIZE,
@@ -137,7 +137,7 @@ function Home() {
                             data?.getAllMemo?.memos.map(
                                 (item, index = 1) =>
                                     index < 0 && (
-                                        <Chip                                            
+                                        <Chip
                                             deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
                                             label={item?.displayName}
                                             onDelete={() => deleteItem(index)}
@@ -171,7 +171,7 @@ function Home() {
                 )}
             </div>
 
-            {location?.state?.click === true ?
+            {location?.state?.click ?
                 <div className="img-container" ref={elementRef} style={{ marginLeft: -40 }}>
                     <div style={{ marginTop: -60, marginLeft: -20 }}>
                         <ThoughtCard item={thoughtData} />

@@ -9,11 +9,22 @@ import { CustomButton, NoteIcon } from "../theme/MuiComponents";
 import { GET_ALL_MEMO } from '../../services/queries';
 import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
 import moment from 'moment'
+import OptionModal from "../Modals/OptionModal";
+import IconButton from "@mui/material/IconButton";
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index'
 import { parseBlockContent } from '../constants'
-import { link } from "fs";
 
 function NoteCard() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const navigate = useNavigate();
   const [clickEvent, setClickEvent] = useState(false)
   const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<
@@ -25,15 +36,6 @@ function NoteCard() {
     fetchTimeline();
   }, []);
 
-  useEffect(() => {
-    if (clickEvent) {
-      setClickEvent(true)
-    } else {
-      setClickEvent(false)
-    }
-
-  }, [clickEvent])
-
   const fetchTimeline = async (addition?: Partial<IGetAllMemoQueryVariables>) => {
     const variables: IGetAllMemoQueryVariables = {
       pageSize: PAGE_SIZE,
@@ -43,9 +45,9 @@ function NoteCard() {
     queryMemos({ variables });
   };
 
-  const navigatePath = (e: any, url: any, id: any) => {
+  const navigatePath = (url: any, id: any) => {
     setClickEvent(true)
-    navigate(url, { state: { id, click: clickEvent } });
+    navigate(url, { state: { id, click: true } });
   }
 
   const stringified = parseBlockContent(data?.getAllMemo?.memos[1]);
@@ -55,7 +57,7 @@ function NoteCard() {
   return (
     <>
       <div>
-        {data && data.getAllMemo && data.getAllMemo!.memos.map((item, index) => (
+        {data && data.getAllMemo && data.getAllMemo?.memos.map((item, index) => (
           <Fragment key={index}>
             <Typography
               variant="body2"
@@ -70,9 +72,7 @@ function NoteCard() {
               }}
             >
               {moment(item.creationDate).format('dddd,MMM DD, YYYY')}
-
             </Typography>
-
             <Grid
               // key={}
               style={{
@@ -84,6 +84,7 @@ function NoteCard() {
                 padding: 4,
               }}
             >
+              {item.displayName ? <a href="" style={{ display: "flex", fontSize: 18, fontWeight: "bold", marginLeft: 4 }}>{item.displayName}</a> : null}
               <Grid
                 style={{ display: "flex", marginBottom: 10, paddingLeft: 8 }}
               >
@@ -97,41 +98,50 @@ function NoteCard() {
                     marginTop: 4,
                   }}
                 >
-                  {item.content.includes(parsedContent, parsedContentt) ?
+                  {item.content.includes(parsedContent || parsedContentt) ?
                     <div dangerouslySetInnerHTML={{
-                      __html: item.content.replace(parsedContent, `<a href="">${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`)
+                      __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`)
                     }} />
                     : item.content}
                 </Typography>
 
-                <Avatar
-                  alt="Remy Sharp"
-                  src={ellipsis}
-                  sx={{
-                    width: 25,
-                    height: 25,
-                    marginLeft: "auto",
-                    marginRight: 1,
-                    top: 4,
-                  }}
+                <IconButton onClick={handleClickOpen} style={{ top: item.displayName ? -40 : -15, }}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={ellipsis}
+                    sx={{
+                      width: 25,
+                      height: 25,
+                      marginLeft: "auto",
+                      marginRight: 1,
+
+                    }}
+                  />
+                </IconButton>
+                <OptionModal
+                  open={open}
+                  handleClickOpen={handleClickOpen}
+                  handleClose={handleClose}
                 />
               </Grid>
-              <Divider />
-
-              <CustomButton
-                onClick={(e) => { navigatePath(e, '/', { id: item }) }}
-                color="inherit"
-                variant="outlined"
-                startIcon={<NoteIcon />}
-              >
-                Note Block
-              </CustomButton>
+              {item.displayName ?
+                null :
+                <>
+                  <Divider />
+                  <CustomButton
+                    onClick={(e) => { navigatePath('/', { id: item }) }}
+                    color="inherit"
+                    variant="outlined"
+                    startIcon={<NoteIcon />}
+                  >
+                    {"welcome to Weavit ✨"}
+                  </CustomButton>
+                </>
+              }
             </Grid>
-
           </Fragment>
         ))}
       </div>
-
     </>
   );
 }

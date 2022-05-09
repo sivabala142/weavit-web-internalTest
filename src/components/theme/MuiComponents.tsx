@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
-import notebook from "../images/notebook.png";
+import notebook from "../../assets/images/notebook.png";
 
 const CustomButton = styled(Button)(({ theme }) => ({
   borderRadius: 16,

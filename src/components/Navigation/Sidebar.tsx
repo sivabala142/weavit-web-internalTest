@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import List from "@mui/material/List";
 import MainPanel from "../Tabs/MainPanel";
-import logo from "../images/Group.png";
+import logo from "../../assets/images/Group.png";
 
 const Sidebar = () => {
   return (

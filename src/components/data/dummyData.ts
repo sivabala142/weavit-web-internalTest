@@ -1,4 +1,4 @@
-import picture from "../images/Avatars.png";
+import picture from "../../assets/images/Avatars.png";
 
 export interface DummyData {
   id: number;

@@ -7,9 +7,9 @@ import SideLayout from "../Layouts/SideLayout";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import notebook from "../images/notebook.png";
-import circle from "../images/circle.png";
-import ellipsis from "../images/Ellipsis.png";
+import notebook from "../../assets/images/notebook.png";
+import circle from "../../assets/images/circle.png";
+import ellipsis from "../../assets/images/Ellipsis.png";
 import { getData } from "../data/dummyData";
 import { CustomButton, NoteIcon } from "../theme/MuiComponents";
 

@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
-import ellipsis from "../images/Ellipsis.png";
+import ellipsis from "../../assets/images/Ellipsis.png";
 import { getData } from "../data/dummyData";
 import SearchInput from "../Inputs/SearchInput";
 import SideLayout from "../Layouts/SideLayout";

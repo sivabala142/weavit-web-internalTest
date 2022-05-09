@@ -6,11 +6,11 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import ellipsis from '../../components/images/Ellipsis.png';
-import add from '../../components/images/add.png';
+import ellipsis from '../../assets/images/ellipsis.png';
+import add from '../../assets/images/add.png';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
-import pencil from '../../components/images/pencil.png';
+import pencil from '../../assets/images/pencil.png';
 import { getData } from '../data/dummyData';
 
 const Item = styled(Paper)(({ theme }) => ({

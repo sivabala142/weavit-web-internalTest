@@ -6,8 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SideLayout from "../Layouts/SideLayout";
-import notebook from "../images/notebook.png";
-import ellipsis from "../images/Ellipsis.png";
+import notebook from "../../assets/images/notebook.png";
+import ellipsis from "../../assets/images/Ellipsis.png";
 import { getData } from "../data/dummyData";
 import NoteCard from "../Cards/NoteCard";
 

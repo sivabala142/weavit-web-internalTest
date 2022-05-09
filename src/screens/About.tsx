@@ -1,5 +1,5 @@
 import React from 'react'
-import StartCard from '../../components/Cards/StartCard'
+import StartCard from '../components/Cards/StartCard'
 
 function About() {
   return (

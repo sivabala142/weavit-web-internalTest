@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import ellipsis from '../..//components/images/Ellipsis.png';
+import ellipsis from '../../assets/images/Ellipsis.png';
 import IconButton from '@mui/material/IconButton';
 import { CustomButton, NoteIcon } from '../theme/MuiComponents';
 import OptionModal from '../Modals/OptionModal';

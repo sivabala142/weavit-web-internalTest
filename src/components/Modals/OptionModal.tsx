@@ -19,7 +19,6 @@ import Grid from "@mui/material/Grid";
 import DialogTitle from "@mui/material/DialogTitle";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { theme } from "../../theme/default";
 import moment from 'moment'
 
 function OptionModal(props: any){

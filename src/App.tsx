@@ -1,5 +1,4 @@
 import React from 'react';
-import cookies from 'js-cookie';
 import fetch from 'cross-fetch';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './layout';
@@ -8,15 +7,13 @@ import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { API_BASE_URL } from './config';
-import { Dashboard } from './screens/Dashboard';
 import { ThemeProvider } from '@mui/material/styles';
-import './components/styles/App.css';
+import './assets/styles/App.css';
 import { theme } from './components/theme/default';
-import DrawerLayout from './components/Layouts/DrawerLayout';
-import Home from './components/pages/Home';
+import Home from './screens/Home';
 import NotFound from './components/NotFound/FindSection';
-import Search from './components/pages/Search';
-import About from './components/pages/About';
+import Search from './screens/Search';
+import About from './screens/About';
 
 const httpLink = createHttpLink({
     uri: API_BASE_URL,
@@ -25,9 +22,8 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
     // const token = cookies.get('access_token_weavit');
-    const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MTgzNjc4NSwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUxODQ1OTY1LCJleHAiOjE2NTE4NDk1NjUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.iQaOiZyYuvh1ysSsRHw875Hms0xg7t08m-aDjSevXnT-J4iFPcKzCAF1cnpjZcRGVnukwMEtsQpP1OCyhIs9xJMjwuyyMDMLLypIxqJFFo1qYY0GhUCFi7xB5jkX4Ud-D7kWxj1C92mxwvpRaLq74ts0fFiMVcH3RGuZZt_VW2iTmH2oFczBfctdKSLdaFr1eIpNnVn2KdFQ8owedmvQ08Vlzvg3b4P-pxS7HxKUnp67UakcI6mUmTd38Hcan_XSXn58h00Ibfgc9vKxWGqj9v3tmmb79QedpZZhZtGA67_rexacCU-WozRJeXtqnyUaJq5vQ9PhVcyDyC2eLgxyqA';
-    // return the headers to the context so httpLink can read them
-
+    const token =
+        'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MjA3MDgyOCwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUyMTAxMTAyLCJleHAiOjE2NTIxMDQ3MDIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.oY5yrJ7XiLVVs6L-c9voS6dnKjdvBXbVV_o_2oWxh5buN6JeJCCk99tV4JJ8ZcDRBM-w2QuXuekVlASQsTGscFXc3JpfL2UqygEiq_-aduPztkiA0rX9NndI0snv1iezLgbttisvcC8sKSqBwctLgRlCRM-j-90Ks7Ha36WIRHmH0EMpwK3nfJg7dDvz-Qooiw5OBCpF3SuirQGOUodNkNajTNZLCN7z_3v_BjyEYq-ZOWXXvoy6Uc1hgcURJVIkvX1QvMGfaIUWTDzMei2sn5kDHqU1xolmru1mh1mhe8rmUmekq6Df8tPl9JK1xe_K_VHv3Z506AEv4NFaJGz7tg';
     return {
         headers: {
             ...headers,
@@ -39,11 +35,10 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-
 });
 
 function App() {
-    return (
+       return (
         <ThemeProvider theme={theme}>
             <ApolloProvider client={client}>
                 <CookiesProvider>
@@ -53,7 +48,7 @@ function App() {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/search" element={<Search />} />
                                 <Route path="/about" element={<About />} />
-                                <Route path='*' element={<NotFound />} />
+                                <Route path="*" element={<NotFound />} />
                             </Route>
                         </Routes>
                     </GlobalProvider>

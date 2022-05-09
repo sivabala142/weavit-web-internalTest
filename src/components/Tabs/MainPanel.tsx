@@ -11,13 +11,13 @@ import TimelineTab from "./TimeLine";
 import InboxTab from "./Inbox";
 import SearchTab from "./Search";
 import ProfileTab from "./Profile";
-import searchblack from "../images/search-black.png";
-import searchblue from "../images/search-blue.png";
-import inboxblack from "../images/inbox-black.png";
-import inboxblue from "../images/inbox-blue.png";
-import timelineblack from "../images/timeline-black.png";
-import timelineblue from "../images/timeline-blue.png";
-import userlogo from "../images/av1.png";
+import searchblack from "../../assets/images/search-black.png";
+import searchblue from "../../assets/images/search-blue.png";
+import inboxblack from "../../assets/images/inbox-black.png";
+import inboxblue from "../../assets/images/inbox-blue.png";
+import timelineblack from "../../assets/images/timeline-black.png";
+import timelineblue from "../../assets/images/timeline-blue.png";
+import userlogo from "../../assets/images/av1.png";
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;

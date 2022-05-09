@@ -7,13 +7,13 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import notebook from '../images/notebook.png';
-import ellipsis from '../images/Ellipsis.png';
-import spell from '../images/spell.png';
+import notebook from '../assets/images/notebook.png';
+import ellipsis from '../assets/images/ellipsis.png';
+import spell from '../assets/images/spell.png';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
-import { getData } from '../data/dummyData';
-import OptionModal from '../../components/Modals/OptionModal';
+import { getData } from '../components/data/dummyData';
+import OptionModal from '../components/Modals/OptionModal';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#F2F4F5',

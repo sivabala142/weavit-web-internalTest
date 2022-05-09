@@ -5,31 +5,25 @@ import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import ThoughtCard from '../../components/Cards/ThoughtCard';
-import RLDD from 'react-list-drag-and-drop/lib/RLDD';
-import { getData } from '../data/dummyData';
-import spell from '../images/spell.png';
+import ThoughtCard from '../components/Cards/ThoughtCard';
+import spell from '../assets/images/spell.png';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import NotFound from '../../components/NotFound/FindSection';
-import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index';
-import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../../graphql-models';
-import { GET_ALL_MEMO } from '../../services/queries';
+import NotFound from '../components/NotFound/FindSection';
+import { useLazyQueryNoCache, PAGE_SIZE } from '../store/index';
+import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables } from '../graphql-models';
+import { GET_ALL_MEMO } from '../services/queries';
 
 function Home() {
-    const dataa = getData();
-    const location = useLocation();
-    const [post, setPost] = useState(dataa);
+    const location :any = useLocation();
     const [thoughtData, setThoughtData] = useState([]);
-    const [fetch, getFetch] = useState(dataa);
-
-    const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO);
+    const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO) as any ;
 
     useEffect(() => {
         if (location.state?.click) {
             fetchTimeline();
-            let memoInfo = [];
+            let memoInfo :any = [];
             memoInfo.push(data?.getAllMemo?.memos, ...thoughtData);
             setThoughtData(memoInfo);
         }
@@ -44,35 +38,6 @@ function Home() {
             ...(addition ?? {}),
         };
         queryMemos({ variables });
-    };
-
-    const deleteItem = (index: any) => {
-        const newTodoItems = [...fetch];
-        newTodoItems.splice(index, 1);
-        getFetch(newTodoItems);
-        setPost(newTodoItems);
-    };
-
-    const ClearAll = () => {
-        const newTodoItems = [...fetch];
-        newTodoItems.splice(0);
-        getFetch(newTodoItems);
-        setPost(newTodoItems);
-    };
-
-    const itemRenderer = (item: any, index: number): JSX.Element => {
-        return (
-            <div className="item">
-                <div key={index} style={{ marginTop: -60, marginLeft: -20 }}>
-                    <ThoughtCard item={item} />
-                </div>
-            </div>
-        );
-    };
-
-    const handleRLDDChange = (reorderedItems: any) => {
-        // console.log('Example.handleRLDDChange');
-        setPost(reorderedItems);
     };
 
     const elementRef = useRef(null);
@@ -94,7 +59,6 @@ function Home() {
             }
         }, speed);
     };
-
 
     return (
         <>
@@ -135,12 +99,11 @@ function Home() {
                     <>
                         {data &&
                             data?.getAllMemo?.memos.map(
-                                (item, index = 1) =>
+                                (item:any, index:number = 1) =>
                                     index < 0 && (
                                         <Chip
                                             deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
                                             label={item?.displayName}
-                                            onDelete={() => deleteItem(index)}
                                             style={{
                                                 marginLeft: -42,
                                                 marginRight: 50,
@@ -159,7 +122,6 @@ function Home() {
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20 }} />}
                         label={'Close All'}
-                        onDelete={() => ClearAll()}
                         style={{
                             marginLeft: -40,
                             marginRight: 50,

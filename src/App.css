@@ -1,26 +1,26 @@
 @font-face {
   font-family: "DMSans-Bold";
-  src: url("../fonts/DMSans-Bold.ttf");
+  src: url("./assets/fonts/DMSans-Bold.ttf");
 }
 @font-face {
   font-family: "DMSans-BoldItalic";
-  src: url("../fonts/DMSans-BoldItalic.ttf");
+  src: url("./assets/fonts/DMSans-BoldItalic.ttf");
 }
 @font-face {
   font-family: "DMSans-Italic";
-  src: url("../fonts/DMSans-Italic.ttf");
+  src: url("./assets/fonts/DMSans-Italic.ttf");
 }
 @font-face {
   font-family: "DMSans-Medium";
-  src: url("../fonts/DMSans-Medium.ttf");
+  src: url("./assets/fonts/DMSans-Medium.ttf");
 }
 @font-face {
   font-family: "DMSans-MediumItalic";
-  src: url("../fonts/DMSans-MediumItalic.ttf");
+  src: url("./assets/fonts/DMSans-MediumItalic.ttf");
 }
 @font-face {
   font-family: "DMSans-Regular";
-  src: url("../fonts/DMSans-Regular.ttf");
+  src: url("./assets/fonts/DMSans-Regular.ttf");
 }
 
 html {
@@ -78,7 +78,7 @@ html {
 
 /* tale card avator border */
 .backgroundimges {
-  background-image: url(../images/top-img-new5.png);
+  background-image: url(./assets/images/top-img-new5.png);
   height: 106px;
   border-radius: 14px;
   background-repeat: no-repeat;
@@ -149,4 +149,8 @@ ul.tree:before {
   position: sticky;
   top: 0px;
   width: 100%;
+}
+.hypertext {
+  color: blue;
+  text-decoration: underline;
 }

@@ -8,7 +8,7 @@ import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import { API_BASE_URL } from './config';
 import { ThemeProvider } from '@mui/material/styles';
-import './assets/styles/App.css';
+import './App.css';
 import { theme } from './components/theme/default';
 import Home from './screens/Home';
 import NotFound from './components/NotFound/FindSection';
@@ -23,7 +23,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
     // const token = cookies.get('access_token_weavit');
     const token =
-        'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MjA3MDgyOCwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUyMTAxMTAyLCJleHAiOjE2NTIxMDQ3MDIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.oY5yrJ7XiLVVs6L-c9voS6dnKjdvBXbVV_o_2oWxh5buN6JeJCCk99tV4JJ8ZcDRBM-w2QuXuekVlASQsTGscFXc3JpfL2UqygEiq_-aduPztkiA0rX9NndI0snv1iezLgbttisvcC8sKSqBwctLgRlCRM-j-90Ks7Ha36WIRHmH0EMpwK3nfJg7dDvz-Qooiw5OBCpF3SuirQGOUodNkNajTNZLCN7z_3v_BjyEYq-ZOWXXvoy6Uc1hgcURJVIkvX1QvMGfaIUWTDzMei2sn5kDHqU1xolmru1mh1mhe8rmUmekq6Df8tPl9JK1xe_K_VHv3Z506AEv4NFaJGz7tg';
+        'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MjA3MDgyOCwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUyMjYxOTUwLCJleHAiOjE2NTIyNjU1NTAsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.Tk3JJ53drGVxMo7TmkBLK2dolYGbaEMwxJxAAqTvvWQXWLNVCYdRHpkgeW2T9oqLRHxCF7HKhlH-sIOQWGKe9iB0JjZDs0cO4Bfb_YufkrJel4VpKVJjVlnArpxBDX7RNpJN-5gvz_NjY-W-CCQ7YaomSafol-t3jBtaZKfwVobmMh9vrOhYrKo1TdmV8d9pHv-U9c3T4G-Vaxnqs5K82XYUwGsrLhz16Gx9vn0ztb-0wQNsSRnw9JtuqO5ccTKj0s0ztDl3cPjIOBB__lXcZuCyfS4B4yP_YbCgHlXPdeDTqHPzN7K-DOFU0PlXs0dfgMz5aySjWCeF1pq2bglc7g';
     return {
         headers: {
             ...headers,

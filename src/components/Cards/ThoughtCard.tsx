@@ -23,7 +23,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function ThoughtCard(props: any) {
-    const [open, setOpen] = useState(false)
+    const { item, node } = props;
+
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -47,7 +49,7 @@ function ThoughtCard(props: any) {
                             color: 'blue',
                             marginTop: 3,
                         }}
-                        // src={props.item.image}
+                        src={node?.getNodeById?.profilePictureUrl}
                         alt="B"
                     />
                 </Grid>
@@ -59,7 +61,7 @@ function ThoughtCard(props: any) {
                         fontFamily: 'DMSans-Medium',
                     }}
                 >
-                    {props.item?.displayName}
+                    {node?.getNodeById?.displayName}
                 </Typography>
                 <Grid style={{ display: 'inline-flex', color: 'gray' }}>
                     <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{moment(props.item?.creationDate).format('dddd,MMM DD, YYYY')}</Typography>
@@ -89,54 +91,136 @@ function ThoughtCard(props: any) {
                     </Typography>
                 </Grid>
                 <div style={{ overflowY: 'scroll', height: 610 }}>
-                    <Typography
-                        variant="body2"
-                        style={{
-                            marginLeft: 18,
-                            textAlign: 'left',
-                            fontSize: 16,
-                            fontFamily: 'DMSans-bold',
-                            marginTop: 20,
-                            marginBottom: 2,
-                        }}
-                    >
-                        {moment(props.item?.creationDate).format('dddd')}
-                    </Typography>
+                    <div>
+                        <Typography
+                            variant="body2"
+                            style={{
+                                marginLeft: 18,
+                                textAlign: 'left',
+                                fontSize: 16,
+                                fontFamily: 'DMSans-bold',
+                                marginTop: 20,
+                                marginBottom: 2,
+                            }}
+                        >
+                            {moment(node?.getNodeById?.creationDate).format('dddd')}
+                        </Typography>
 
-                    <Grid
-                        style={{
-                            borderStyle: 'solid',
-                            borderRadius: 16,
-                            borderWidth: 4,
-                            marginTop: 12,
-                            marginLeft: 12,
-                            marginRight: 12,
-                            backgroundColor: '#fff',
-                            borderColor: '#fff',
-                            padding: 4,
-                        }}
-                    >
-                        <Grid style={{ display: 'flex', marginBottom: 10 }}>
-                            <Typography
-                                variant="body2"
-                                style={{
-                                    textAlign: 'left',
-                                    paddingLeft: '8px',
-                                    fontFamily: 'DMSans-Regular',
-                                }}
-                            >
-                                {props.item?.content}
-                            </Typography>
-                            <IconButton onClick={handleClickOpen}>
-                                <Avatar alt="Remy Sharp" src={ellipsis} sx={{ width: 25, height: 25 }} />
-                            </IconButton>
-                            <OptionModal open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} createdDate={props.item?.creationDate} lastViewes={props.item?.lastViewed} />
+                        <Grid
+                            style={{
+                                borderStyle: 'solid',
+                                borderRadius: 16,
+                                borderWidth: 4,
+                                marginTop: 12,
+                                marginLeft: 12,
+                                marginRight: 12,
+                                backgroundColor: '#fff',
+                                borderColor: '#fff',
+                                padding: 4,
+                            }}
+                        >
+                            <Grid style={{ display: 'flex', marginBottom: 10 }}>
+                                <Typography
+                                    variant="body2"
+                                    style={{
+                                        textAlign: 'left',
+                                        paddingLeft: '8px',
+                                        fontFamily: 'DMSans-Regular',
+                                    }}
+                                >
+                                    {node?.getNodeById?.content}
+                                </Typography>
+                                <IconButton onClick={handleClickOpen}>
+                                    <Avatar alt="Remy Sharp" src={ellipsis} sx={{ width: 25, height: 25 }} />
+                                </IconButton>
+                                <OptionModal open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} createdDate={props.item?.creationDate} lastViewes={props.item?.lastViewed} />
+                            </Grid>
+                            <Divider />
+                            <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
+                                Note Block
+                            </CustomButton>
                         </Grid>
-                        <Divider />
-                        <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
-                            Note Block
-                        </CustomButton>
-                    </Grid>
+                    </div>
+
+                    {item?.getAllMemo?.memos?.map((val: any, i: any) => {
+                        return val?.attachedNode.map((a: any, i: any) => {
+                            return (
+                                <div key={i}>
+                                    <Typography
+                                        variant="body2"
+                                        style={{
+                                            marginLeft: 18,
+                                            textAlign: 'left',
+                                            fontSize: 16,
+                                            fontFamily: 'DMSans-bold',
+                                            marginTop: 20,
+                                            marginBottom: 2,
+                                        }}
+                                    >
+                                        {moment(a?.creationDate).format('dddd')}
+                                    </Typography>
+
+                                    <Grid
+                                        style={{
+                                            borderStyle: 'solid',
+                                            borderRadius: 16,
+                                            borderWidth: 4,
+                                            marginTop: 12,
+                                            marginLeft: 12,
+                                            marginRight: 12,
+                                            backgroundColor: '#fff',
+                                            borderColor: '#fff',
+                                            padding: 4,
+                                        }}
+                                    >
+                                        <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
+                                            <Grid style={{ display: 'flex', marginBottom: 2 }}>
+                                                <a href="" style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
+                                                {a?.displayName}
+                                                </a>
+
+                                                <IconButton
+                                                    onClick={handleClickOpen}
+                                                    style={{
+                                                        marginLeft: 'auto',
+                                                        marginRight: -8,
+                                                        marginTop: -6,
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        alt="Remy Sharp"
+                                                        src={ellipsis}
+                                                        sx={{
+                                                            width: 25,
+                                                            height: 25,
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                            </Grid>
+                                            <Grid style={{ display: 'flex', marginBottom: 10 }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    style={{
+                                                        textAlign: 'left',
+                                                        fontWeight: 500,
+                                                        fontFamily: 'DMSans-Regular',
+                                                        width: 260,
+                                                        marginTop: -10,
+                                                    }}
+                                                >
+                                                  {a?.content}
+                                                </Typography>
+                                            </Grid>
+                                        </div>
+                                        {/* <Divider /> */}
+                                        {/* <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
+                                            Note Block
+                                        </CustomButton> */}
+                                    </Grid>
+                                </div>
+                            );
+                        });
+                    })}
                 </div>
             </Item>
         </Grid>

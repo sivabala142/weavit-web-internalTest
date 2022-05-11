@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import reactStringReplace from 'react-string-replace';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
@@ -13,7 +14,7 @@ import OptionModal from '../Modals/OptionModal';
 import IconButton from '@mui/material/IconButton';
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index';
 import { parseBlockContent } from '../constants';
-
+import Badge from '@mui/material/Badge';
 function NoteCard() {
     const [open, setOpen] = useState(false);
 
@@ -50,13 +51,31 @@ function NoteCard() {
     const stringified = parseBlockContent(data?.getAllMemo?.memos[1]);
     const parsedContent = stringified?.entityMap[0].data.displayName;
     const parsedContentt = stringified?.entityMap[1].data.displayName;
-
+    // const getNode = (item: any) => {
+    //     // console.log('item', item);
+    // };
     return (
         <>
             <div>
                 {data &&
                     data.getAllMemo &&
-                    data.getAllMemo?.memos.map((item: any, index: any) => {
+                    data.getAllMemo?.memos.map((item: any, index: number) => {
+                        let a = item.stringifiedContent !== null ? JSON.parse(item.stringifiedContent) : null;
+                        let c = a !== null ? a.entityRanges : [];
+                        let f = c.map((q: any) => {
+                            return a.text.substr(q.offset, q.length);
+                        });
+                        let textvar = item.content;
+
+                        f.map((v: any) => {
+                            if (item.content?.includes(v)) {
+                                // let textcontent =  reactStringReplace(v ,textvar , (match,i)=>{ <a href="">{v}</a>} )
+                                // textvar = textcontent;
+                                textvar = textvar.replace(v, `<a href="">${v}</a>`);
+                                // textvar = textvar.replace(v, `<span class="hypertext">${v}</span>`);
+                                // textvar = textvar.replace(v,` <a href="#" onclick="someFunction(); return false;">LINK</a>`);
+                            }
+                        });
                         return (
                             <Fragment key={index}>
                                 <Typography
@@ -85,61 +104,120 @@ function NoteCard() {
                                     }}
                                 >
                                     {item.displayName ? (
-                                        <a href="" style={{ display: 'flex', fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
-                                            {item.displayName}
-                                        </a>
-                                    ) : null}
-                                    <Grid style={{ display: 'flex', marginBottom: 10, paddingLeft: 8 }}>
-                                        <Typography
-                                            variant="body2"
-                                            style={{
-                                                textAlign: 'left',
-                                                fontWeight: 500,
-                                                fontFamily: 'DMSans-Regular',
-                                                width: 260,
-                                                marginTop: 4,
-                                            }}
-                                        >
-                                            {item.content.includes(parsedContent || parsedContentt) ? (
-                                                <div
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`),
-                                                    }}
-                                                />
-                                            ) : (
-                                                item.content
-                                            )}
-                                        </Typography>
+                                        <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
+                                            <Grid style={{ display: 'flex', marginBottom: 2 }}>
+                                                <a href="" style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
+                                                    {item.displayName}
+                                                </a>
 
-                                        <IconButton onClick={handleClickOpen} style={{ top: item.displayName ? -40 : -15 }}>
-                                            <Avatar
-                                                alt="Remy Sharp"
-                                                src={ellipsis}
-                                                sx={{
-                                                    width: 25,
-                                                    height: 25,
-                                                    marginLeft: 'auto',
-                                                    marginRight: 1,
-                                                }}
-                                            />
-                                        </IconButton>
-                                        <OptionModal open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
-                                    </Grid>
-                                    {item.displayName ? null : (
-                                        <>
-                                            <Divider />
-                                            <CustomButton
-                                                onClick={e => {
-                                                    navigatePath('/', { id: item });
-                                                }}
-                                                color="inherit"
-                                                variant="outlined"
-                                                startIcon={<NoteIcon />}
-                                            >
-                                                {'welcome to Weavit ✨'}
-                                            </CustomButton>
-                                        </>
+                                                <IconButton
+                                                    onClick={handleClickOpen}
+                                                    style={{
+                                                        marginLeft: 'auto',
+                                                        marginRight: -8,
+                                                        marginTop: -6,
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        alt="Remy Sharp"
+                                                        src={ellipsis}
+                                                        sx={{
+                                                            width: 25,
+                                                            height: 25,
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                            </Grid>
+                                            <Grid style={{ display: 'flex', marginBottom: 8 }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    style={{
+                                                        textAlign: 'left',
+                                                        fontWeight: 500,
+                                                        fontFamily: 'DMSans-Regular',
+                                                        width: 260,
+                                                        marginTop: -10,
+                                                    }}
+                                                    dangerouslySetInnerHTML={{ __html: textvar }}
+                                                >
+                                                    {/* {item.content.includes(parsedContent || parsedContentt) ? (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`),
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        item.content
+                                                    )} */}
+                                                </Typography>
+                                                <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 10, marginTop: 6 }} />
+                                            </Grid>
+                                        </div>
+                                    ) : (
+                                        <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
+                                            <Grid style={{ display: 'flex', marginBottom: 2 }}>
+                                                <IconButton
+                                                    onClick={handleClickOpen}
+                                                    style={{
+                                                        marginLeft: 'auto',
+                                                        marginRight: -8,
+                                                        marginTop: -6,
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        alt="Remy Sharp"
+                                                        src={ellipsis}
+                                                        sx={{
+                                                            width: 25,
+                                                            height: 25,
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                            </Grid>
+                                            <Grid style={{ display: 'flex', marginBottom: 8 }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    style={{
+                                                        textAlign: 'left',
+                                                        fontWeight: 500,
+                                                        fontFamily: 'DMSans-Regular',
+                                                        width: 260,
+                                                        marginTop: -35,
+                                                    }}
+                                                    dangerouslySetInnerHTML={{ __html: textvar }}
+                                                >
+                                                    {/* {item.content.includes(parsedContent || parsedContentt) ? (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`),
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        item.content
+                                                    )} */}
+                                                    {/* {textvar} */}
+                                                </Typography>
+                                                <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 12, marginTop: 6 }} />
+                                            </Grid>
+                                            {item.displayName ? null : (
+                                                <>
+                                                    <Divider />
+                                                    <CustomButton
+                                                        style={{ marginBottom: '8px' }}
+                                                        onClick={e => {
+                                                            navigatePath('/', { id: item });
+                                                        }}
+                                                        color="inherit"
+                                                        variant="outlined"
+                                                        startIcon={<NoteIcon />}
+                                                    >
+                                                        {'welcome to Weavit ✨'}
+                                                    </CustomButton>
+                                                </>
+                                            )}
+                                        </div>
                                     )}
+                                    <OptionModal open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
                                 </Grid>
                             </Fragment>
                         );
@@ -148,5 +226,8 @@ function NoteCard() {
         </>
     );
 }
-
+const GetNodeid = (props: any) => {
+    const { getNode, v } = props;
+    return <a onClick={getNode}>{v}</a>;
+};
 export default NoteCard;

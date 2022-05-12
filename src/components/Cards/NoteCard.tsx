@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import { useLazyQueryNoCache, PAGE_SIZE } from '../../store/index';
 import { parseBlockContent } from '../constants';
 import Badge from '@mui/material/Badge';
+
 function NoteCard() {
     const [open, setOpen] = useState(false);
 
@@ -48,12 +49,10 @@ function NoteCard() {
         navigate(url, { state: { id, click: true } });
     };
 
-    const stringified = parseBlockContent(data?.getAllMemo?.memos[1]);
-    const parsedContent = stringified?.entityMap[0].data.displayName;
-    const parsedContentt = stringified?.entityMap[1].data.displayName;
-    // const getNode = (item: any) => {
-    //     // console.log('item', item);
-    // };
+    const getNode = (item: any) => {
+        console.log('item', item);
+    };
+
     return (
         <>
             <div>
@@ -66,14 +65,14 @@ function NoteCard() {
                             return a.text.substr(q.offset, q.length);
                         });
                         let textvar = item.content;
-
                         f.map((v: any) => {
                             if (item.content?.includes(v)) {
-                                // let textcontent =  reactStringReplace(v ,textvar , (match,i)=>{ <a href="">{v}</a>} )
-                                // textvar = textcontent;
-                                textvar = textvar.replace(v, `<a href="">${v}</a>`);
-                                // textvar = textvar.replace(v, `<span class="hypertext">${v}</span>`);
-                                // textvar = textvar.replace(v,` <a href="#" onclick="someFunction(); return false;">LINK</a>`);
+                                const textcontent = reactStringReplace(textvar, v, (match, index) => (
+                                    <a href="#" onClick={() => getNode(item)} key={index}>
+                                        {match}
+                                    </a>
+                                ));
+                                textvar = textcontent;
                             }
                         });
                         return (
@@ -138,19 +137,10 @@ function NoteCard() {
                                                         width: 260,
                                                         marginTop: -10,
                                                     }}
-                                                    dangerouslySetInnerHTML={{ __html: textvar }}
                                                 >
-                                                    {/* {item.content.includes(parsedContent || parsedContentt) ? (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`),
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        item.content
-                                                    )} */}
+                                                    {textvar}
                                                 </Typography>
-                                                <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 10, marginTop: 6 }} />
+                                                {/* <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 10, marginTop: 6 }} /> */}
                                             </Grid>
                                         </div>
                                     ) : (
@@ -184,20 +174,10 @@ function NoteCard() {
                                                         width: 260,
                                                         marginTop: -35,
                                                     }}
-                                                    dangerouslySetInnerHTML={{ __html: textvar }}
                                                 >
-                                                    {/* {item.content.includes(parsedContent || parsedContentt) ? (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: item.content.replace(parsedContent, `<a href=''>${parsedContent}</a>`).replace(parsedContentt, `<a href="">${parsedContentt}</a>`),
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        item.content
-                                                    )} */}
-                                                    {/* {textvar} */}
+                                                    {textvar}
                                                 </Typography>
-                                                <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 12, marginTop: 6 }} />
+                                                {/* <Badge badgeContent={item.suggestedEntities.length} color="primary" style={{ marginLeft: 'auto', marginRight: 12, marginTop: 6 }} /> */}
                                             </Grid>
                                             {item.displayName ? null : (
                                                 <>
@@ -226,8 +206,4 @@ function NoteCard() {
         </>
     );
 }
-const GetNodeid = (props: any) => {
-    const { getNode, v } = props;
-    return <a onClick={getNode}>{v}</a>;
-};
 export default NoteCard;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -23,6 +24,20 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function ThoughtCard(props: any) {
+    const matches = useMediaQuery('(min-width:1800px)');
+    
+
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: '#F2F4F5',
+        ...theme.typography.body2,
+        paddingLeft: theme.spacing(0),
+        paddingRight: theme.spacing(0),
+        textAlign: 'center',
+        borderRadius: 14,
+        width: matches ? 360 : 290,
+        height: 800,
+    }));
+
     const { item, node } = props;
     const [open, setOpen] = useState(false);
 
@@ -33,205 +48,209 @@ function ThoughtCard(props: any) {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const tilefilterObjects = [...new Map(node.map((item: any) => [item.id, item])).values()];
     return (
-        <>        
-       {
-           node?.map((val:any,i:any)=>{
-               return (
-                <Grid item xs={12} sm={4} md={4} marginTop={9} marginLeft={4}>
-                <Item elevation={0}>
-                    <Grid className="backgroundimges">
-                        <Avatar
-                            sx={{
-                                bgcolor: '#85CEFF',
-                                width: 80,
-                                display: 'inline-flex',
-                                height: 80,
-                                fontWeight: 'bold',
-                                color: 'blue',
-                                marginTop: 3,
-                            }}
-                            src={val?.profilePictureUrl}
-                            alt="B"
-                        />
-                    </Grid>
-                    <Typography
-                        style={{
-                            fontWeight: 'bold',
-                            fontSize: 20,
-                            marginTop: 6,
-                            fontFamily: 'DMSans-Medium',
-                        }}
-                    >
-                        {val?.displayName}
-                    </Typography>
-                    <Grid style={{ display: 'inline-flex', color: 'gray' }}>
-                        <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{moment(props.item?.creationDate).format('dddd,MMM DD, YYYY')}</Typography>
-                        <Typography
-                            style={{
-                                fontSize: 14,
-                                marginTop: 6,
-                                marginLeft: 6,
-                                fontFamily: 'DMSans-Regular',
-                            }}
-                        >
-                            {'<Calender Name>'}
-                        </Typography>
-                    </Grid>
-                    <br />
-                    <Grid style={{ display: 'inline-flex', color: 'gray' }}>
-                        <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{'<Location>'}</Typography>
-                        <Typography
-                            style={{
-                                fontSize: 14,
-                                marginTop: 6,
-                                marginLeft: 6,
-                                fontFamily: 'DMSans-Regular',
-                            }}
-                        >
-                            {'<Status>'}
-                        </Typography>
-                    </Grid>
-                    <div style={{ overflowY: 'scroll', height: 610 }}>
-                        <div>
+        <>
+            {tilefilterObjects?.map((val: any, i: any) => {
+                return (
+                    <Grid item xs={12} sm={4} md={4} marginTop={9} marginLeft={2}>
+                        <Item elevation={0}>
+                            <Grid className="backgroundimges">
+                                <Avatar
+                                    sx={{
+                                        bgcolor: '#85CEFF',
+                                        width: 80,
+                                        display: 'inline-flex',
+                                        height: 80,
+                                        fontWeight: 'bold',
+                                        color: 'blue',
+                                        marginTop: 3,
+                                    }}
+                                    src={val?.profilePictureUrl}
+                                    alt="B"
+                                />
+                            </Grid>
                             <Typography
-                                variant="body2"
                                 style={{
-                                    marginLeft: 18,
-                                    textAlign: 'left',
-                                    fontSize: 16,
-                                    fontFamily: 'DMSans-bold',
-                                    marginTop: 20,
-                                    marginBottom: 2,
+                                    fontWeight: 'bold',
+                                    fontSize: 20,
+                                    marginTop: 6,
+                                    fontFamily: 'DMSans-Medium',
                                 }}
                             >
-                                {moment(val?.creationDate).format('dddd')}
+                                {val?.displayName}
                             </Typography>
-    
-                            <Grid
-                                style={{
-                                    borderStyle: 'solid',
-                                    borderRadius: 16,
-                                    borderWidth: 4,
-                                    marginTop: 12,
-                                    marginLeft: 12,
-                                    marginRight: 12,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#fff',
-                                    padding: 4,
-                                }}
-                            >
-                                <Grid style={{ display: 'flex', marginBottom: 10 }}>
+                            <Grid style={{ display: 'inline-flex', color: 'gray' }}>
+                                <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{moment(props.item?.creationDate).format('dddd,MMM DD, YYYY')}</Typography>
+                                <Typography
+                                    style={{
+                                        fontSize: 14,
+                                        marginTop: 6,
+                                        marginLeft: 6,
+                                        fontFamily: 'DMSans-Regular',
+                                    }}
+                                >
+                                    {'<Calender Name>'}
+                                </Typography>
+                            </Grid>
+                            <br />
+                            <Grid style={{ display: 'inline-flex', color: 'gray' }}>
+                                <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{'<Location>'}</Typography>
+                                <Typography
+                                    style={{
+                                        fontSize: 14,
+                                        marginTop: 6,
+                                        marginLeft: 6,
+                                        fontFamily: 'DMSans-Regular',
+                                    }}
+                                >
+                                    {'<Status>'}
+                                </Typography>
+                            </Grid>
+                            <div style={{ overflowY: 'scroll', height: 610 }}>
+                                <div>
                                     <Typography
                                         variant="body2"
                                         style={{
+                                            marginLeft: 18,
                                             textAlign: 'left',
-                                            paddingLeft: '8px',
-                                            fontFamily: 'DMSans-Regular',
+                                            fontSize: 16,
+                                            fontFamily: 'DMSans-bold',
+                                            marginTop: 20,
+                                            marginBottom: 2,
                                         }}
                                     >
-                                        {val?.content}
+                                        {moment(val?.creationDate).format('dddd')}
                                     </Typography>
-                                    <IconButton onClick={handleClickOpen}>
-                                        <Avatar alt="Remy Sharp" src={ellipsis} sx={{ width: 25, height: 25 }} />
-                                    </IconButton>
-                                    <OptionModal open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} createdDate={props.item?.creationDate} lastViewes={props.item?.lastViewed} />
-                                </Grid>
-                                <Divider />
-                                <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
-                                    Note Block
-                                </CustomButton>
-                            </Grid>
-                        </div>
-    
-                        {item?.getAllMemo?.memos?.map((val: any, i: any) => {
-                            return val?.attachedNode.map((a: any, i: any) => {
-                                return (
-                                    <div key={i}>
-                                        <Typography
-                                            variant="body2"
-                                            style={{
-                                                marginLeft: 18,
-                                                textAlign: 'left',
-                                                fontSize: 16,
-                                                fontFamily: 'DMSans-bold',
-                                                marginTop: 20,
-                                                marginBottom: 2,
-                                            }}
-                                        >
-                                            {moment(a?.creationDate).format('dddd')}
-                                        </Typography>
-    
-                                        <Grid
-                                            style={{
-                                                borderStyle: 'solid',
-                                                borderRadius: 16,
-                                                borderWidth: 4,
-                                                marginTop: 12,
-                                                marginLeft: 12,
-                                                marginRight: 12,
-                                                backgroundColor: '#fff',
-                                                borderColor: '#fff',
-                                                padding: 4,
-                                            }}
-                                        >
-                                            <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
-                                                <Grid style={{ display: 'flex', marginBottom: 2 }}>
-                                                    <a href="" style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
-                                                    {a?.displayName}
-                                                    </a>
-    
-                                                    <IconButton
-                                                        onClick={handleClickOpen}
-                                                        style={{
-                                                            marginLeft: 'auto',
-                                                            marginRight: -8,
-                                                            marginTop: -6,
-                                                        }}
-                                                    >
-                                                        <Avatar
-                                                            alt="Remy Sharp"
-                                                            src={ellipsis}
-                                                            sx={{
-                                                                width: 25,
-                                                                height: 25,
-                                                            }}
-                                                        />
-                                                    </IconButton>
-                                                </Grid>
-                                                <Grid style={{ display: 'flex', marginBottom: 10 }}>
-                                                    <Typography
-                                                        variant="body2"
-                                                        style={{
-                                                            textAlign: 'left',
-                                                            fontWeight: 500,
-                                                            fontFamily: 'DMSans-Regular',
-                                                            width: 260,
-                                                            marginTop: -10,
-                                                        }}
-                                                    >
-                                                      {a?.content}
-                                                    </Typography>
-                                                </Grid>
-                                            </div>
-                                            {/* <Divider /> */}
-                                            {/* <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
+
+                                    <Grid
+                                        style={{
+                                            borderStyle: 'solid',
+                                            borderRadius: 16,
+                                            borderWidth: 4,
+                                            marginTop: 12,
+                                            marginLeft: 12,
+                                            marginRight: 12,
+                                            backgroundColor: '#fff',
+                                            borderColor: '#fff',
+                                            padding: 4,
+                                        }}
+                                    >
+                                        <Grid style={{ display: 'flex', marginBottom: 10 }}>
+                                            <Typography
+                                                variant="body2"
+                                                style={{
+                                                    textAlign: 'left',
+                                                    paddingLeft: '8px',
+                                                    fontFamily: 'DMSans-Regular',
+                                                }}
+                                            >
+                                                {val?.content}
+                                            </Typography>
+                                            <IconButton onClick={handleClickOpen}>
+                                                <Avatar alt="Remy Sharp" src={ellipsis} sx={{ width: 25, height: 25 }} />
+                                            </IconButton>
+                                            <OptionModal
+                                                open={open}
+                                                handleClickOpen={handleClickOpen}
+                                                handleClose={handleClose}
+                                                createdDate={props.item?.creationDate}
+                                                lastViewes={props.item?.lastViewed}
+                                            />
+                                        </Grid>
+                                        <Divider />
+                                        <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
+                                            Note Block
+                                        </CustomButton>
+                                    </Grid>
+                                </div>
+
+                                {item?.getAllMemo?.memos?.map((val: any, i: any) => {
+                                    return val?.attachedNode.map((a: any, i: any) => {
+                                        return (
+                                            <div key={i}>
+                                                <Typography
+                                                    variant="body2"
+                                                    style={{
+                                                        marginLeft: 18,
+                                                        textAlign: 'left',
+                                                        fontSize: 16,
+                                                        fontFamily: 'DMSans-bold',
+                                                        marginTop: 20,
+                                                        marginBottom: 2,
+                                                    }}
+                                                >
+                                                    {moment(a?.creationDate).format('dddd')}
+                                                </Typography>
+
+                                                <Grid
+                                                    style={{
+                                                        borderStyle: 'solid',
+                                                        borderRadius: 16,
+                                                        borderWidth: 4,
+                                                        marginTop: 12,
+                                                        marginLeft: 12,
+                                                        marginRight: 12,
+                                                        backgroundColor: '#fff',
+                                                        borderColor: '#fff',
+                                                        padding: 4,
+                                                    }}
+                                                >
+                                                    <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
+                                                        <Grid style={{ display: 'flex', marginBottom: 2 }}>
+                                                            <a href="" style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
+                                                                {a?.displayName}
+                                                            </a>
+
+                                                            <IconButton
+                                                                onClick={handleClickOpen}
+                                                                style={{
+                                                                    marginLeft: 'auto',
+                                                                    marginRight: -8,
+                                                                    marginTop: -6,
+                                                                }}
+                                                            >
+                                                                <Avatar
+                                                                    alt="Remy Sharp"
+                                                                    src={ellipsis}
+                                                                    sx={{
+                                                                        width: 25,
+                                                                        height: 25,
+                                                                    }}
+                                                                />
+                                                            </IconButton>
+                                                        </Grid>
+                                                        <Grid style={{ display: 'flex', marginBottom: 10 }}>
+                                                            <Typography
+                                                                variant="body2"
+                                                                style={{
+                                                                    textAlign: 'left',
+                                                                    fontWeight: 500,
+                                                                    fontFamily: 'DMSans-Regular',
+                                                                    width: 260,
+                                                                    marginTop: -10,
+                                                                }}
+                                                            >
+                                                                {a?.content}
+                                                            </Typography>
+                                                        </Grid>
+                                                    </div>
+                                                    {/* <Divider /> */}
+                                                    {/* <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
                                                 Note Block
                                             </CustomButton> */}
-                                        </Grid>
-                                    </div>
-                                );
-                            });
-                        })}
-                    </div>
-                </Item>
-            </Grid>
-               )
-           })
-       }
-       </>
+                                                </Grid>
+                                            </div>
+                                        );
+                                    });
+                                })}
+                            </div>
+                        </Item>
+                    </Grid>
+                );
+            })}
+        </>
     );
 }
 
-export default ThoughtCard;
+export default React.memo(ThoughtCard);

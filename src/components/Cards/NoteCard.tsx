@@ -43,16 +43,18 @@ function NoteCard() {
         };
         queryMemos({ variables });
     };
-
-    const navigatePath = (url: any, id: any) => {
+    const buttonNavigatePath = (url: any, ids: any) => {
+        let id = ids.item;
         setClickEvent(true);
         navigate(url, { state: { id, click: true } });
     };
-
     const getNode = (item: any) => {
         console.log('item', item);
     };
-
+    const handleNodelIdLink = (e: any, id: any) => {
+        e.preventDefault();
+        navigate('/', { state: { id, click: true } });
+    };
     return (
         <>
             <div>
@@ -105,7 +107,7 @@ function NoteCard() {
                                     {item.displayName ? (
                                         <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
                                             <Grid style={{ display: 'flex', marginBottom: 2 }}>
-                                                <a href="" style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
+                                                <a href="javascript:void(0)" onClick={e => handleNodelIdLink(e, item)} style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
                                                     {item.displayName}
                                                 </a>
 
@@ -185,7 +187,7 @@ function NoteCard() {
                                                     <CustomButton
                                                         style={{ marginBottom: '8px' }}
                                                         onClick={e => {
-                                                            navigatePath('/', { id: item });
+                                                            buttonNavigatePath('/', { item });
                                                         }}
                                                         color="inherit"
                                                         variant="outlined"

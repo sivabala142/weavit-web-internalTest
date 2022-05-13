@@ -14,7 +14,7 @@ import OptionModal from '../Modals/OptionModal';
 import moment from 'moment';
 
 function ThoughtCard(props: any) {
-    const matches = useMediaQuery('(min-width:1800px)');
+    const media = useMediaQuery('(min-width:1800px)');
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#F2F4F5',
@@ -23,8 +23,8 @@ function ThoughtCard(props: any) {
         paddingRight: theme.spacing(0),
         textAlign: 'center',
         borderRadius: 14,
-        width: matches ? 360 : 290,
-        height: 800,
+        width: media ? 360 : 290,
+        height: media ? 840 : 660,
     }));
 
     const { item, node } = props;
@@ -71,9 +71,9 @@ function ThoughtCard(props: any) {
                                                                 <Avatar
                                                                     sx={{
                                                                         bgcolor: '#85CEFF',
-                                                                        width: 80,
+                                                                        width: media ? 80 : 70,
                                                                         display: 'inline-flex',
-                                                                        height: 80,
+                                                                        height: media ? 80 : 70,
                                                                         fontWeight: 'bold',
                                                                         color: 'blue',
                                                                         marginTop: 3,
@@ -85,7 +85,7 @@ function ThoughtCard(props: any) {
                                                             <Typography
                                                                 style={{
                                                                     fontWeight: 'bold',
-                                                                    fontSize: 20,
+                                                                    fontSize: media ? 20 : 18,
                                                                     marginTop: 6,
                                                                     fontFamily: 'DMSans-Medium',
                                                                 }}
@@ -93,12 +93,12 @@ function ThoughtCard(props: any) {
                                                                 {val?.displayName}
                                                             </Typography>
                                                             <Grid style={{ display: 'inline-flex', color: 'gray' }}>
-                                                                <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>
+                                                                <Typography style={{ fontSize: media ? 14 : 12, marginTop: 6, fontFamily: 'DMSans-Regular' }}>
                                                                     {moment(props.item?.creationDate).format('dddd,MMM DD, YYYY')}
                                                                 </Typography>
                                                                 <Typography
                                                                     style={{
-                                                                        fontSize: 14,
+                                                                        fontSize: media ? 14 : 12,
                                                                         marginTop: 6,
                                                                         marginLeft: 6,
                                                                         fontFamily: 'DMSans-Regular',
@@ -109,10 +109,10 @@ function ThoughtCard(props: any) {
                                                             </Grid>
                                                             <br />
                                                             <Grid style={{ display: 'inline-flex', color: 'gray' }}>
-                                                                <Typography style={{ fontSize: 14, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{'<Location>'}</Typography>
+                                                                <Typography style={{ fontSize: media ? 14 : 12, marginTop: 6, fontFamily: 'DMSans-Regular' }}>{'<Location>'}</Typography>
                                                                 <Typography
                                                                     style={{
-                                                                        fontSize: 14,
+                                                                        fontSize: media ? 14 : 12,
                                                                         marginTop: 6,
                                                                         marginLeft: 6,
                                                                         fontFamily: 'DMSans-Regular',
@@ -128,7 +128,7 @@ function ThoughtCard(props: any) {
                                                                         style={{
                                                                             marginLeft: 18,
                                                                             textAlign: 'left',
-                                                                            fontSize: 16,
+                                                                            fontSize: media ? 14 : 12,
                                                                             fontFamily: 'DMSans-bold',
                                                                             marginTop: 20,
                                                                             marginBottom: 2,
@@ -154,6 +154,7 @@ function ThoughtCard(props: any) {
                                                                             <Typography
                                                                                 variant="body2"
                                                                                 style={{
+                                                                                    fontSize: media ? 14 : 12,
                                                                                     textAlign: 'left',
                                                                                     paddingLeft: '8px',
                                                                                     fontFamily: 'DMSans-Regular',
@@ -173,7 +174,12 @@ function ThoughtCard(props: any) {
                                                                             />
                                                                         </Grid>
                                                                         <Divider />
-                                                                        <CustomButton variant="outlined" color="inherit" startIcon={<NoteIcon />}>
+                                                                        <CustomButton
+                                                                            variant="outlined"
+                                                                            color="inherit"
+                                                                            startIcon={<NoteIcon />}
+                                                                            style={{ fontSize: media ? 12 : 10, height: media ? 'auto' : 25 }}
+                                                                        >
                                                                             Note Block
                                                                         </CustomButton>
                                                                     </Grid>
@@ -228,8 +234,8 @@ function ThoughtCard(props: any) {
                                                                                                     alt="Remy Sharp"
                                                                                                     src={ellipsis}
                                                                                                     sx={{
-                                                                                                        width: 25,
-                                                                                                        height: 25,
+                                                                                                        width: media ? 25 : 20,
+                                                                                                        height: media ? 25 : 20,
                                                                                                     }}
                                                                                                 />
                                                                                             </IconButton>

@@ -11,13 +11,14 @@ import Sidebar from "./Sidebar";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
-const drawerWidth = 360;
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Props {
   window?: () => Window;
 }
 function Header(props: Props) {
+  const media = useMediaQuery('(min-width:1800px)');
+  const drawerWidth = media ? 360 : 300;
   const { window } = props;
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);

@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
@@ -12,13 +13,14 @@ import { getData } from "../data/dummyData";
 import NoteCard from "../Cards/NoteCard";
 
 function TimelineTab() {
+  const media = useMediaQuery('(min-width:1800px)');
   const navigate = useNavigate();
   const data = getData();
 
   return (
     <SideLayout>
       <Typography
-        fontSize={26}
+        fontSize={media ? 26 : 20}
         textAlign="left"
         marginLeft={2}
         marginTop={2}

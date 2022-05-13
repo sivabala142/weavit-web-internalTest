@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import reactStringReplace from 'react-string-replace';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
@@ -17,6 +18,7 @@ import { parseBlockContent } from '../constants';
 import Badge from '@mui/material/Badge';
 
 function NoteCard() {
+    const media = useMediaQuery('(min-width:1800px)');
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -61,24 +63,24 @@ function NoteCard() {
                 {data &&
                     data.getAllMemo &&
                     data.getAllMemo?.memos.map((item: any, index: number) => {
-                        let a = item.stringifiedContent !== null ? JSON.parse(item.stringifiedContent) : null;
-                        let c = a !== null ? a.entityRanges : [];
-                        let f = c.map((q: any) => {
-                            return a.text.substr(q.offset, q.length);
+                        let parsedContent = item.stringifiedContent !== null ? JSON.parse(item.stringifiedContent) : null;
+                        let offsetRange = parsedContent !== null ? parsedContent.entityRanges : [];
+                        let offsetValue = offsetRange.map((q: any) => {
+                            return parsedContent.text.substr(q.offset, q.length);
                         });
-                        let d = a !== null ? a.entityMap : [];
-                        let z = Object.values(d);
-                        let g = z.map((q: any) => {
+                        let enityData = parsedContent !== null ? parsedContent.entityMap : [];
+                        let enityArray = Object.values(enityData);
+                        let entityId = enityArray.map((q: any) => {
                             return {
                                 nodeID: q.data.nodeID,
                                 type: q.data.type,
                             };
                         });
                         let textvar = item.content;
-                        f.map((v: any, i: any) => {
+                        offsetValue.map((v: any, i: any) => {
                             if (item.content?.includes(v)) {
                                 const textcontent = reactStringReplace(textvar, v, (match, index) => (
-                                    <span style={{ textDecoration: 'underline', color: 'blue' }} onClick={() => getNode(g[i])} key={index}>
+                                    <span style={{ textDecoration: 'underline', color: 'blue' }} onClick={() => getNode(entityId[i])} key={index}>
                                         {match}
                                     </span>
                                 ));
@@ -92,7 +94,7 @@ function NoteCard() {
                                     style={{
                                         marginLeft: 18,
                                         textAlign: 'left',
-                                        fontSize: 16,
+                                        fontSize: media ? 16 : 12,
                                         fontWeight: 'bold',
                                         fontFamily: 'DMSans-Medium',
                                         marginTop: 20,
@@ -110,12 +112,13 @@ function NoteCard() {
                                         marginTop: 12,
                                         backgroundColor: '#fff',
                                         padding: 4,
+                                        width: media ? 'auto' : 275,
                                     }}
                                 >
                                     {item.displayName ? (
                                         <div style={{ paddingLeft: 6, paddingTop: 6, paddingBottom: 6, paddingRight: 6 }}>
                                             <Grid style={{ display: 'flex', marginBottom: 2 }}>
-                                                <a href="javascript:void(0)" onClick={e => handleNodelIdLink(e, item)} style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 4 }}>
+                                                <a href="javascript:void(0)" onClick={e => handleNodelIdLink(e, item)} style={{ fontSize: media ? 18 : 14, fontWeight: 'bold', marginLeft: 4 }}>
                                                     {item.displayName}
                                                 </a>
 
@@ -131,8 +134,8 @@ function NoteCard() {
                                                         alt="Remy Sharp"
                                                         src={ellipsis}
                                                         sx={{
-                                                            width: 25,
-                                                            height: 25,
+                                                            width: media ? 25 : 20,
+                                                            height: media ? 25 : 20,
                                                         }}
                                                     />
                                                 </IconButton>
@@ -144,7 +147,8 @@ function NoteCard() {
                                                         textAlign: 'left',
                                                         fontWeight: 500,
                                                         fontFamily: 'DMSans-Regular',
-                                                        width: 260,
+                                                        width: media ? 260 : 220,
+                                                        fontSize: media ? 14 : 12,
                                                         marginTop: -10,
                                                     }}
                                                 >
@@ -168,8 +172,8 @@ function NoteCard() {
                                                         alt="Remy Sharp"
                                                         src={ellipsis}
                                                         sx={{
-                                                            width: 25,
-                                                            height: 25,
+                                                            width: media ? 25 : 20,
+                                                            height: media ? 25 : 20,
                                                         }}
                                                     />
                                                 </IconButton>
@@ -181,7 +185,8 @@ function NoteCard() {
                                                         textAlign: 'left',
                                                         fontWeight: 500,
                                                         fontFamily: 'DMSans-Regular',
-                                                        width: 260,
+                                                        width: media ? 260 : 220,
+                                                        fontSize: media ? 14 : 12,
                                                         marginTop: -35,
                                                     }}
                                                 >
@@ -193,7 +198,7 @@ function NoteCard() {
                                                 <>
                                                     <Divider />
                                                     <CustomButton
-                                                        style={{ marginBottom: '8px' }}
+                                                        style={{ marginBottom: '8px', fontSize: media ? 12 : 10, height: media ? 'auto' : 25 }}
                                                         onClick={e => {
                                                             buttonNavigatePath('/', { item });
                                                         }}

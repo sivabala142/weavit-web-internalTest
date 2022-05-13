@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import Avatar from '@mui/material/Avatar';
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,11 +18,15 @@ import { IGetAllMemoQueryResult, IGetAllMemoQueryVariables, IGetNodeByIdQueryRes
 import { GET_ALL_MEMO, GET_NODE_BY_ID } from '../services/queries';
 
 function Home() {
+    const media = useMediaQuery('(min-width:1800px)');
     const location: any = useLocation();
+    const navigate = useNavigate();
     const [thoughtData, setThoughtData] = useState<any>([]);
     const [NodeData, setNodeData] = useState<any>([]);
+    const [ClearAll, setClearAll] = useState('');
     const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO) as any;
     const [queryNode, { error: nodeError, data: nodeData }] = useLazyQueryNoCache<IGetNodeByIdQueryResult, IGetNodeByIdQueryVariables>(GET_NODE_BY_ID);
+    console.log('ClearAll', ClearAll);
 
     useEffect(() => {
         if (location.state?.click) {
@@ -39,16 +44,6 @@ function Home() {
                 });
                 setThoughtData([...v]);
             });
-            // let v = [...thoughtData, data?.getAllMemo?.memos];
-            // v = v.filter(function (element) {
-            //     return element !== undefined;
-            // });
-            // setThoughtData([...v]);
-            // let node = [...NodeData, nodeData?.getNodeById];
-            // node = node.filter(function (element) {
-            //     return element !== undefined;
-            // });
-            // setNodeData([...node]);
         }
     }, [location?.state?.id?.nodeID]);
 
@@ -89,7 +84,7 @@ function Home() {
             }
             if (element.scrollLeft === 0) {
                 setArrowDisable(true);
-             } else {
+            } else {
                 setArrowDisable(false);
             }
         }, speed);
@@ -101,6 +96,7 @@ function Home() {
     const clearAll = () => {
         setThoughtData([]);
         setNodeData([]);
+        navigate('/');
     };
 
     return (
@@ -126,11 +122,11 @@ function Home() {
             </div>
             <div style={{ marginTop: -2, marginLeft: 24 }}>
                 <Grid container marginLeft={-5} marginTop={-6} style={{ display: 'flex', width: 500, height: '100%' }}>
-                    <Avatar alt="Remy Sharp" src={spell} sx={{ width: 25, height: 25, marginTop: 0.5 }} />
+                    <Avatar alt="Remy Sharp" src={spell} sx={{ width: media ? 25 : 20, height: media ? 25 : 20, marginTop: 0.5 }} />
                     <Typography
                         style={{
                             marginLeft: 6,
-                            fontSize: 22,
+                            fontSize: media ? 22 : 18,
                             width: 400,
                             fontFamily: 'DMSans-Regular',
                         }}
@@ -161,7 +157,9 @@ function Home() {
                     <Chip
                         variant="outlined"
                         deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}
-                        onDelete={() => clearAll()}
+                        onDelete={() => {
+                            clearAll();
+                        }}
                         label={'Clear All'}
                         style={{
                             marginLeft: -40,

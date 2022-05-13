@@ -49,7 +49,7 @@ function NoteCard() {
         navigate(url, { state: { id, click: true } });
     };
     const getNode = (item: any) => {
-        console.log('item', item);
+        navigate('/', { state: { id: item, click: true } });
     };
     const handleNodelIdLink = (e: any, id: any) => {
         e.preventDefault();
@@ -66,13 +66,21 @@ function NoteCard() {
                         let f = c.map((q: any) => {
                             return a.text.substr(q.offset, q.length);
                         });
+                        let d = a !== null ? a.entityMap : [];
+                        let z = Object.values(d);
+                        let g = z.map((q: any) => {
+                            return {
+                                nodeID: q.data.nodeID,
+                                type: q.data.type,
+                            };
+                        });
                         let textvar = item.content;
-                        f.map((v: any) => {
+                        f.map((v: any, i: any) => {
                             if (item.content?.includes(v)) {
                                 const textcontent = reactStringReplace(textvar, v, (match, index) => (
-                                    <a href="#" onClick={() => getNode(item)} key={index}>
+                                    <span style={{ textDecoration: 'underline', color: 'blue' }} onClick={() => getNode(g[i])} key={index}>
                                         {match}
-                                    </a>
+                                    </span>
                                 ));
                                 textvar = textcontent;
                             }

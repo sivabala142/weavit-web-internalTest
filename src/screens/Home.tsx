@@ -17,8 +17,8 @@ import { GET_ALL_MEMO, GET_NODE_BY_ID } from '../services/queries';
 
 function Home() {
     const location: any = useLocation();
-    const [thoughtData, setThoughtData] = useState([]);
-    const [NodeData, setNodeData] = useState([]);
+    const [thoughtData, setThoughtData] = useState<any>([]);
+    const [NodeData, setNodeData] = useState<any>([]);
     const [queryMemos, { error, data, loading }] = useLazyQueryNoCache<IGetAllMemoQueryResult, IGetAllMemoQueryVariables>(GET_ALL_MEMO) as any;
     const [queryNode, { error: nodeError, data: nodeData }] = useLazyQueryNoCache<IGetNodeByIdQueryResult, IGetNodeByIdQueryVariables>(GET_NODE_BY_ID);
 
@@ -79,7 +79,7 @@ function Home() {
         }, speed);
     };
     const clearChip = (e: any) => {
-        let filterdData = NodeData.filter(res => res.id !== e);
+        let filterdData = NodeData.filter((res:any) => res.id !== e);
         setNodeData(filterdData);
     };
     const clearAll = () => {
@@ -122,7 +122,7 @@ function Home() {
                     </Typography>
                 </Grid>
                 {NodeData.length > 0 &&
-                    NodeData?.map(e => {
+                    NodeData?.map((e:any) => {
                         return (
                             <Chip
                                 deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}

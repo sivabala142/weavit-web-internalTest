@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import Avatar from '@mui/material/Avatar';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
@@ -24,18 +25,30 @@ function Home() {
 
     useEffect(() => {
         if (location.state?.click) {
-            fetchNode();
-            fetchTimeline();
-            let v = [...thoughtData, data?.getAllMemo?.memos];
-            v = v.filter(function (element) {
-                return element !== undefined;
+            fetchNode().then((e: any) => {
+                let node = [...NodeData, e.data?.getNodeById];
+                node = node.filter(function (element) {
+                    return element !== undefined;
+                });
+                setNodeData([...node]);
             });
-            setThoughtData([...v]);
-            let node = [...NodeData, nodeData?.getNodeById];
-            node = node.filter(function (element) {
-                return element !== undefined;
+            fetchTimeline().then((e: any) => {
+                let v = [...thoughtData, e.data?.getAllMemo?.memos];
+                v = v.filter(function (element) {
+                    return element !== undefined;
+                });
+                setThoughtData([...v]);
             });
-            setNodeData([...node]);
+            // let v = [...thoughtData, data?.getAllMemo?.memos];
+            // v = v.filter(function (element) {
+            //     return element !== undefined;
+            // });
+            // setThoughtData([...v]);
+            // let node = [...NodeData, nodeData?.getNodeById];
+            // node = node.filter(function (element) {
+            //     return element !== undefined;
+            // });
+            // setNodeData([...node]);
         }
     }, [location?.state?.id?.nodeID]);
 
@@ -48,7 +61,9 @@ function Home() {
             // nodeIDs:location?.state?.nodeID, "memo_9b3ef904-9a85-4dc2-b509-ebaf6f1d6052" ,2 , memo_95672cfb-ba56-43bd-adff-d83a7ecc320e ,1
             ...(addition ?? {}),
         };
-        await queryMemos({ variables });
+        return new Promise((resolve, reject) => {
+            resolve(queryMemos({ variables }));
+        });
     };
     const fetchNode = async () => {
         const variables: IGetNodeByIdQueryVariables = {
@@ -56,7 +71,9 @@ function Home() {
             nodeLabel: location?.state?.id?.type,
             setLastViewed: true,
         };
-        await queryNode({ variables });
+        return new Promise((resolve, reject) => {
+            resolve(queryNode({ variables }));
+        });
     };
 
     const elementRef = useRef(null);
@@ -72,20 +89,20 @@ function Home() {
             }
             if (element.scrollLeft === 0) {
                 setArrowDisable(true);
-                console.log(arrowDisable);
-            } else {
+             } else {
                 setArrowDisable(false);
             }
         }, speed);
     };
     const clearChip = (e: any) => {
-        let filterdData = NodeData.filter((res:any) => res.id !== e);
+        let filterdData = NodeData.filter((res: any) => res.id !== e);
         setNodeData(filterdData);
     };
     const clearAll = () => {
         setThoughtData([]);
         setNodeData([]);
     };
+
     return (
         <>
             <div className="button-contianer">
@@ -122,7 +139,7 @@ function Home() {
                     </Typography>
                 </Grid>
                 {NodeData.length > 0 &&
-                    NodeData?.map((e:any) => {
+                    NodeData?.map((e: any) => {
                         return (
                             <Chip
                                 deleteIcon={<CloseIcon style={{ fontSize: 20, color: '#313233' }} />}

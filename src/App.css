@@ -154,3 +154,7 @@ ul.tree:before {
   color: blue;
   text-decoration: underline;
 }
+
+.todo {
+  display: flex;
+}

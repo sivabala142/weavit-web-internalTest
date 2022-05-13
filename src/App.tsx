@@ -23,7 +23,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
     // const token = cookies.get('access_token_weavit');
     const token =
-        'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MjA3MDgyOCwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUyNDIwMDI0LCJleHAiOjE2NTI0MjM2MjQsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.qwEu82goLHanu5UgLb843rxYjG-eHY93X87F7YIDrPay6e3whK0Ylz5nKS80GacVqlRJM2gLF1PMJNLOTqx-QEKOyT9nu3tlKeUK6P7ZmrTRbEROnuxNOSaXQCm7Yl7UQtakiMGUO6CLcNPZhgzwPHSoqMafIffuVPOfjd_TQpybxW3dWgF10K9KkyNY-ZT1Aiq8x3IJ3xTupN8-7_hMUpwf4S_9vpU2vZVB2TWqxEcfwYYj3hgkN4RwZi0jeYYXCbHOQa0bAHLJnMm7gLBkdGegVEf1xi5kokpxpUgnGh8y880QRX5Evygykh2R2qV6R8AcxfKbfRVIeI59JoEiKw';
+        'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vd2Vhdml0LWludGVncmF0aW9uLTEiLCJhdWQiOiJ3ZWF2aXQtaW50ZWdyYXRpb24tMSIsImF1dGhfdGltZSI6MTY1MjA3MDgyOCwidXNlcl9pZCI6Imdvb2dsZToxMTM1MzU5NjIyMzQxOTA5NjEzNDAiLCJzdWIiOiJnb29nbGU6MTEzNTM1OTYyMjM0MTkwOTYxMzQwIiwiaWF0IjoxNjUyNDM0Nzc0LCJleHAiOjE2NTI0MzgzNzQsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.mKLR4BRkJYdS1kRbosC7VFqVdGwJTcmAaXhhLuz6R_7sFC8My6HfgSg9545YWzKehdZBwKGPMXV-4RWiFZyF9uaC2FzgKZXzwLvfN3qHbOTpfqHgQqDmo-AF0pvHa1K6oKV6HCf7duXrVkeTDfJbE7gknkpV5rUZq9OO6FpaAsRYNp9p1Xdi8G8TRUZ_DP7hNGmpJfmQuUsU-xo4lC29TVKxhhpdTr8xtTmsHHeQTcobDdj-p-WYAdgdfttryUnXAFf4XBzIQ3bnSzGCwCqStYzXbsrBHtNTt26-5x7PoUBpIZImIn_1qZAVBMkERIhuz3Lnr9-6ZWH57vwLWtvEEg';
     return {
         headers: {
             ...headers,
@@ -38,7 +38,7 @@ const client = new ApolloClient({
 });
 
 function App() {
-       return (
+    return (
         <ThemeProvider theme={theme}>
             <ApolloProvider client={client}>
                 <CookiesProvider>

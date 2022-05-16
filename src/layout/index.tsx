@@ -13,13 +13,13 @@ export const ProtectedRoute = () => {
 
     if (token) {
         return (
-            <div className="main">
-                <div className="content">
+            // <div className="main">
+            //     <div className="content">
                     <MainLayout>
                         <Outlet />
                     </MainLayout>
-                </div>
-            </div>
+            //     </div>
+            // </div>
         );
     }
 

@@ -96,7 +96,6 @@ function Home() {
     const clearAll = () => {
         setThoughtData([]);
         setNodeData([]);
-        navigate('/');
     };
 
     return (
@@ -181,6 +180,7 @@ function Home() {
             ) : (
                 <NotFound />
             )}
+               {NodeData.length === 0 && <NotFound/>}
         </>
     );
 }
